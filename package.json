@@ -1,0 +1,39 @@
+{
+  "main": "protal.js",
+  "name": "@tars/rpc",
+  "version": "2.0.4",
+  "description": "tars4nodejs的rpc通信框架",
+  "homepage": "",
+  "author": {
+    "name": "czzou",
+    "email": "czzou@tencent.com",
+    "url": ""
+  },
+  "keywords": [
+    "tars",
+    "tup",
+    "proxy",
+    "server"
+  ],
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "contributors": [
+    {
+      "name": "",
+      "email": "",
+      "url": ""
+    }
+  ],
+  "dependencies": {
+    "@tars/dyeing": "^2.0.0",
+    "@tars/monitor": "^2.0.0",
+    "@tars/registry": "^2.0.0",
+    "@tars/utils": "^2.0.0",
+    "@tars/stream": "^2.0.1",
+    "hashring": "^3.2.0"
+  },
+  "readmeFilename": "README.md",
+  "license": "BSD-3-Clause"
+}
