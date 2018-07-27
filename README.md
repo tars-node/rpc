@@ -44,7 +44,7 @@ TARS编码协议的编解码规则以及Tars文件的编写方法，请参考 [@
 
 **由Tars文件生成客户端或者服务端的代码的方法：**
 
-首先需要编译得到tars2node工具，工具代码地址:  [https://github.com/Tencent/Tars/tree/master/cpp/tools/tars2node]()
+首先需要下载（或通过源码编译）得到 [tars2node（点击跳转）](https://github.com/tars-node/tars2node) 工具。
 
 **tars2node工具简介：**
 
@@ -62,18 +62,7 @@ TARS编码协议的编解码规则以及Tars文件的编写方法，请参考 [@
 
 上述命令不仅转换文件中定义的“常量”、“枚举值”、“结构体”等数据类型，同时将interface的描述段翻译成服务端的接口文件。生成的文件名称为“Protocol.js”以及“ProtocolImp.js”，开发者不要改动“Protocol.js”，只需要继续完善“ProtocolImp.js”，实现文件中具体的函数，即可作为Tars服务端提供服务。具体的使用方法请参考“npm install tars”模块的说明文档。
 
-tars2node支持的命令行参数及其作用：
-
-| 选项 | 作用 |
-| ------------- | ------------- |
-| --tars-lib-path=\<DIRECTORY\>  | 指定@tars/stream模块的路径，默认使用NodeJS的目录。 |
-| --with-tars | 是否允许“tars”作为命名空间（因为tars这个命名空间主要用于框架服务的tars文件定义）。 |
-| --dir=\<DIRECTORY\> | 生成文件的输出目录。 |
-| --relative | 限定所有的Tars文件都在当前目录寻找。|
-| --tarsBase=\<DIRECTORY\> | 指定Tars文件的搜索目录。|
-| --r | 转换嵌套的Tars文件（比如在A.tars中包含了B.tars和C.tars，使用该参数，在翻译A.tars的同时，也将B.tars和C.tars翻译成JS代码。|
-| --client | 生成客户端的调用类代码。|
-| --server | 生成服务端的框架代码。|
+具体使用说明，请参考 `tars2node` 说明文档。
 
 ## 03 - tars示例和开发步骤
 
