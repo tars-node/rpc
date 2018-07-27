@@ -1,95 +1,78 @@
+# @tars/rpc
 
-## 00 - 安装
+`@tars/rpc` 是 Tars RPC 调用框架，提供了一个多服务器进程间进行 RPC 调用的基础设施，它可以实现下述能力：
 
-> $ npm install @tars/rpc
+- 使用 [tars2node](https://github.com/tars-node/tars2node) 将Tars 文件翻译成客户端代理类代码后，供客户端调用任意的Tars服务。
 
-## 01 - tars简介
+- 使用 [tars2node](https://github.com/tars-node/tars2node) 将Tars 文件翻译成服务端代码后，可以实现标准的Tars服务，该服务可被任意使用 Tars/TUP 协议的客户端直接调用。
 
-tars是Tars4NodeJS项目底层的RPC调用框架，提供了一个多服务器进程间进行RPC调用的基础设施。简单来说我们可以用这个模块做这些事情：
+- 远程日志、染色日志、属性上报、告警上报与服务通信等框架内服务。
 
-- 使用tars2node将Tars文件翻译成客户端代理类代码后，供客户端调用任意的Tars服务。
+- 创建自定义通信协议的客户端代理类(比如使用 JSON 格式的协议)。
 
-- 使用tars2node将Tars文件翻译成服务端代码后，可以实现标准的Tars服务，该服务可被任意使用TARS/TUP协议的客户端直接调用。
-
-- 远程日志、染色日志、属性上报、告警上报、tarsnode与服务通信等框架内服务。
-
-- 创建自定义通信协议的客户端代理类(比如使用JSON格式的协议)。
-
-- 创建自定义通信协议的服务端(比如使用JSON格式的协议)。
+- 创建自定义通信协议的服务端(比如使用 JSON 格式的协议)。
 
 - 模块：@tars/registry，功能：根据服务Obj名字到主控查询该服务可用的IP列表。
 
-tars分为客户端和服务器端两个部分。 客户端部分提供了rpc代理生成，消息路由和网络通讯等功能。 服务器端提供了远程服务暴露，请求派发，网络通讯等功能。
+Tars RPC 分为客户端和服务器端两个部分：
 
-## 02 - 关于协议、Tars文件以及翻译工具tars2node的说明
+* 客户端部分提供了 RPC 代理生成，消息路由和网络通讯等功能。 
 
-**在深入学习tars的相关知识之前，我们先理清`TARS编码协议`、`TUP组包协议`、`TARS组包协议`三者之间的关系：**
+* 服务器端提供了远程服务暴露，请求派发，网络通讯等功能。
 
-- TARS编码协议是一种数据编解码规则，它将整形、枚举值、字符串、序列、字典、自定义结构体等数据类型按照一定的规则编码到二进制数据流中。对端接收到二进制数据流之后，按照相应的规则反序列化可得到原始数值。
+## 安装
 
-- TARS编码协议使用一种叫做TAG的整型值(unsigned char)来标识变量，比如某个变量A的TAG值为100(该值由开发者自定义)，我们将变量值编码的同时，也将该TAG值编码进去。对端需要读取变量A的数值时，就到数据流中寻找TAG值为100的数据段，找到后按规则读出数据部分即是变量A的数值。
+``` bash
+npm install @tars/rpc
+```
 
-- TARS编码协议的定位是一套编码规则。tars协议序列化之后的数据不仅可以进行网络传输，同时还可以存储到数据库或者DCache中。
+## 关于协议与 Tars 文件的说明
 
-- TUP组包协议是TARS编码协议的上层封装，定位为通信协议。它使用变量名作为变量的关键字，编码时，客户端将变量名打包到数据流中；解码时，对端根据变量名寻找对应的数据区，然后根据数据类型对该数据区进行反序列化得到原始数值。
+**在深入学习 Tars 的相关知识之前，我们先理清`Tars 编码协议`、`TUP组包协议`、`TARS组包协议`三者之间的关系：**
 
-- TUP组包协议内置一个TARS编码协议的Map类型，该Map的关键字就是变量名，Map的值是将变量的数据值经过TARS编码序列化的二进制数据。
+- Tars 编码协议是一种数据编解码规则，它将整形、枚举值、字符串、序列、字典、自定义结构体等数据类型按照一定的规则编码到二进制数据流中。对端接收到二进制数据流之后，按照相应的规则反序列化可得到原始数值。
 
-- TUP组包协议封装的数据包可以直接发送给Tars服务端，而服务端可以直接反序列化得到原始值。
+- Tars 编码协议使用一种叫做TAG的整型值(unsigned char)来标识变量。 比如某个变量的 TAG 值为 100 (该值由开发者自定义)，编码时将变量值编码的同时，也将该 TAG 值编码进去。对端需要读取变量的数值时，就到数据流中寻找 TAG 值为 100 的数据段，找到后按规则读出数据部分即是变量的数值。
 
-- TARS组包协议是对RequestPacket（请求结构体）和ResponsePacket（结果结构体）使用TARS编码协议封装的通信协议。结构体包含比如请求序列号、协议类型、RPC参数序列化之后二进制数据等重要信息。
+- Tars 编码协议的定位是一套编码规则。 Tars 协议序列化之后的数据不仅可以进行网络传输，同时还可以存储到数据库。
 
-TARS编码协议的编解码规则以及Tars文件的编写方法，请参考 [@tars/steam文档](https://github.com/tars-node/stream/blob/master/README.md)。
+- TUP 组包协议是 Tars 编码协议的上层封装，定位为通信协议。它使用变量名作为变量的关键字，编码时，将变量名打包到数据流中；解码时，根据变量名寻找对应的数据区，然后根据数据类型对该数据区进行反序列化得到原始数值。
 
+- TUP 组包协议内置一个 Tars 编码协议的 <Map> 类型，该 <Map> 的键就是变量名，值是变量的数据值经过 Tars 编码序列化的二进制数据。
 
-**由Tars文件生成客户端或者服务端的代码的方法：**
+- TUP 组包协议封装的数据包可以直接发送给 Tars 服务端，而服务端可以直接反序列化得到原始值。
 
-首先需要下载（或通过源码编译）得到 [tars2node（点击跳转）](https://github.com/tars-node/tars2node) 工具。
+- TARS 组包协议是对 RequestPacket（请求结构体）和 ResponsePacket（结果结构体）使用 Tars 编码协议封装的通信协议。结构体包含比如请求序列号、协议类型、RPC参数序列化之后二进制数据等重要信息。
 
-**tars2node工具简介：**
+Tars 编码协议的编解码规则以及 Tars 文件的编写方法，请参考 [@tars/steam文档](https://github.com/tars-node/stream/blob/master/README.md)。
 
-学习Tars文件的编写方法之后，我们就可以自己来定义通信描述文件，然后使用tars2node的不同命令行选项生成不同的代码文件：
+使用时，可以根据需求定义通信描述文件，然后通过 [tars2node](https://github.com/tars-node/tars2node) 工具转换出所需的代码文件，具体使用说明请参考 `tars2node` 说明文档。
 
->$ tars2node Protocol.tars
+## 示例
 
-上述命令将忽略interface描述段，只转换文件中定义的“常量”、“枚举值”、“结构体”等数据类型，供开发者当不使用Tars框架作为调用工具时的编解码库文件。生成的文件名称为“ProtocolTars.js”。
+1. Clone 此项目。
 
-> $ tars2node Protocol.tars --client
+2. 在项目的根目录执行：
 
-上述命令不仅转换文件中定义的“常量”、“枚举值”、“结构体”等数据类型，同时将interface的描述段翻译成RPC调用框架。生成的文件名称为“ProtocolProxy.js”，该文件供调用方使用。开发者引入该文件之后，可以直接调用服务端的服务。具体的使用方法请参考“npm install tars”模块的说明文档。
+```bash
+npm install
+```
 
-> $ tars2node Protocol.tars --server
+3. 在 `/rpc/examples/rpc-tars/demo.1/server.node.1` 目录下启动 RPC 服务端程序：
 
-上述命令不仅转换文件中定义的“常量”、“枚举值”、“结构体”等数据类型，同时将interface的描述段翻译成服务端的接口文件。生成的文件名称为“Protocol.js”以及“ProtocolImp.js”，开发者不要改动“Protocol.js”，只需要继续完善“ProtocolImp.js”，实现文件中具体的函数，即可作为Tars服务端提供服务。具体的使用方法请参考“npm install tars”模块的说明文档。
+``` bash
+node main.js
+```
 
-具体使用说明，请参考 `tars2node` 说明文档。
+4. 在 `/rpc/examples/rpc-tars/demo.1/client.node.proxy` 目录下启动 RPC 客户端程序：
 
-## 03 - tars示例和开发步骤
+``` bash
+node main.js
+```
 
-**文档看不下去了，马上动手实测！**
+## 开发步骤
 
-**第一步**，[下载rpc模块代码](https://github.com/tars-node/rpc)：
-
-**第二步**，在rpc模块根目录
-
-> $ npm install
-
-**第三步**，在`/rpc/examples/rpc-tars/demo.1/server.node.1`目录下
-
-> $ node main.js
-
-启动rpc 服务端程序
-
-**第四步**，在`/rpc/examples/rpc-tars/demo.1/client.node.proxy`目录下
-
-> $ node main.js
-
-启动rpc 客户端程序
-
-
-**使用tars模块的开发步骤**
-
-**第一步**，编写tars文件，定义客户端与服务端通信用到的常量、枚举值、结构体、函数等通信协议。我们使用如下tars文件作为示例：
+1. 编写tars文件，定义客户端与服务端通信用到的常量、枚举值、结构体、函数等通信协议。 我们使用如下 Tars 文件作为示例：
 
 > 一般而言Tars文件通常由`服务端开发`制定、维护和提供。
 
@@ -124,11 +107,13 @@ module TRom
 将上述内容保存为：NodeJsComm.tars。
 
 
-**第二步**，根据tars文件生成客户端的调用代码
+2. 根据 Tars 文件生成客户端调用代码：
 
-> $ tars2node --client NodeJsComm.tars
+``` bash
+tars2node --client NodeJsComm.tars
+```
 
-**第三步**，客户端程序
+3. 编写客户端程序
 
 ```javascript
 //STEP01 引入系统模块以及工具生成的代码
@@ -163,9 +148,12 @@ stUser.name = "tencent-mig";
 
 prx.getall(stUser).then(success, error).done();
 ```
-将上述代码保存为client.js，使用如下命令即可调用服务端。
 
-> $ node client.js
+将上述代码保存为 `client.js`，使用如下命令即可调用服务端。
+
+``` bash
+node client.js
+```
 
 >result.response.costtime: 7
 
@@ -173,13 +161,19 @@ prx.getall(stUser).then(success, error).done();
 
 >result.response.arguments.stResult: { id: 10000, iLevel: 10001 }
 
-如果我们只是调用方，写到这里已经足矣。按照刚才的示例，拿到相应Tars文件我们就可以调用C++的Tars服务、Java的Tars服务或者NodeJS的Tars服务。
+只要有相应 Tars 文件就可以调用 C++、Java、PHP、Node.js 提供的 Tars 服务。
 
-**第四步**，实现一个NodeJS版本的Tars服务。
+4. 根据 Tars 文件生成服务端代码：
 
-首先，完形填空。完成Tars文件中定义的RPC函数，实现自己的业务逻辑。
+``` bash
+tars2node --server NodeJsComm.tars
+```
 
-tars2node的`--erver`选项将Tars文件生成服务端的代码。使用该选项翻译工具不仅转换文件中定义的“常量”、“枚举值”、“结构体”等数据类型，同时将interface描述段翻译成服务端的接口文件。主要生成两个文件，比如在当前例子中会生成`NodeJsComm.js`和`NodeJsCommImp.js`。开发者 **不需要也尽量不要** 改动`NodeJsComm.js`，该文件主要实现了结构体编解码、函数参数编解码、函数分发等功能。`NodeJsCommImp.js`继承与`NodeJsComm.js`，该文件主要供开发者填补定义的RPC函数，实现业务逻辑。
+5. 编写服务端程序
+
+[tars2node](https://github.com/tars-node/tars2node) 工具会生成 `NodeJsComm.js` 与 `NodeJsCommImp.js`。
+开发者 **不需要也尽量不要** 改动`NodeJsComm.js`，该文件主要实现了结构体编解码、函数参数编解码、函数分发等功能。
+开发者只需要填补 `NodeJsCommImp.js` 中定义的 RPC 函数，实现业务逻辑即可。
 
 ```javascript
 var TRom = require('./NodeJsComm.js').TRom;
@@ -237,16 +231,15 @@ svr.start({
 
 console.log("server started.");
 ```
-将上述代码保存为server.js，使用如下命令启动。
+将上述代码保存为server.js，使用如下命令启动即可。
 
-> $ node server.js
+```bash
+node server.js
+```
 
->server started.
+## 客户端初始化函数
 
-
-## 04 - 客户端的初始化函数[tars].client.initialize
-
-在演示代码中我们提到initialize不一定要显示调用，我们用其他方式同样可以设置我们需要的参数。
+在演示代码中我们提到 initialize 不一定要显示调用，我们用其他方式同样可以设置我们需要的参数。
 
 首先我们看下配置文件的格式和必要参数：
 
@@ -255,19 +248,18 @@ console.log("server started.");
     <application>
         <client>
             locator = tars.tarsregistry.QueryObj@tcp -h 127.0.0.1 -p 14002 ##定义主控地址
-            async-invoke-timeout=60000										  ##异步调用的超时时间（ms）
+            async-invoke-timeout=60000									   ##异步调用的超时时间（ms）
         </client>
     </application>
 </tars>
 ```
 
-这个配置文件正是由tarsnode生成的，我们主要使用"tars.application.client.locator"和"tars.application.client.async-invoke-timeout"这个两个配置项。
+这个配置文件正是由 `tarsnode` 自动生成的，我们主要使用 `tars.application.client.locator` 和 `tars.application.client.async-invoke-timeout` 这个两个配置节。
 
-> 什么情况下可以不用调用initialize函数？
+> 什么情况下可以不用调用 initialize 函数？
+> 如果我们在生成服务端代理时，每个服务端都使用直连的模式，也就是在 stringToProxy 中指定IP地址就可以不用初始化了。
 
-> 如果我们在生成服务端代理时，每个服务端都使用直连的模式，也就是在stringToProxy中指定IP地址就可以不用初始化了。
-
-除了使用配置文件设置这两个参数之外，我们可以调用[tars].client对外暴露的函数进行设置：
+除了使用配置文件设置这两个参数之外，我们可以调用 [@tars/rpc].client 对外暴露的方法进行设置：
 
 ```
 var Tars  = require("@tars/rpc").client;
@@ -276,19 +268,17 @@ Tars.set("locator", "tars.tarsregistry.QueryObj@tcp -h 127.0.0.1 -p 14002");
 Tars.set("timeout", 60000);
 ```
 
-上述的调用方法，与使用initialize+配置文件的方式等价。
+上述的调用方法，与使用配置文件的方式等价。
 
-## 05 - Tars服务的创建方法
+## Tars 服务的创建方法
 
-tars有三种方法创建一个标准的Tars服务：
+Tars 有三种方法创建一个标准的 Tars 服务：
 
-**第一种**，使用tarsnode生成的配置文件。
+* 使用 `tarsnode` 生成的配置文件：
 
-使用这种方法与TARS4C++的使用方式一样。
+使用这种方法与 Tars C++ 的使用方式一样，需要我们在 Tars 管理平台配置服务的 Obj，然后在启动程序时由 `tarsnode` 自动生成包含监听端口的配置文件，服务框架再依赖该配置绑定端口启动服务。
 
-首先需要我们在TARS管理平台配置服务的Obj，然后在启动程序时由tarsnode生成包含监听端口的配置文件，然后服务框架再依赖该配置绑定端口+启动服务。
-
-![tars服务创建](http://3gimg.qq.com/trom_s/tarsdoc/2.png)
+![tars服务创建](https://raw.githubusercontent.com/tars-node/rpc/master/docs/images/platform.png)
 
 tarsnode生成的配置文件类似与如下：
 
@@ -349,7 +339,7 @@ tarsnode生成的配置文件类似与如下：
 </tars>
 ```
 
-我们使用该配置文件创建一个服务，代码如下：
+我们使用该配置文件创建一个服务：
 
 ```javascript
 //STEP01 引入关键模块
@@ -368,9 +358,9 @@ svr.initialize("./TRom.NodeJsTestServer.config.conf", function (server){
 svr.start();
 ```
 
-**第二种**，显示化服务端信息
+* 显示配置服务端信息
 
-```
+```javascript
 //STEP01 引入关键模块
 var Tars  = require("@tars/tars").server;
 var TRom = require("./NodeJsCommImp.js").TRom;
@@ -389,9 +379,9 @@ svr.start({
 console.log("server started.");
 ```
 
-**第三种**，从tarsnode生成的配置文件中，选取部分服务来启动
+* 从 `tarsnode` 生成的配置文件中，选取部分服务启动
 
-```
+```javascript
 //STEP01 引入关键模块
 var Tars   = require("@tars/rpc");
 var TRom  = require("./NodeJsCommImp.js");
@@ -408,33 +398,33 @@ Tars.server.getServant("./TRom.NodeJsTestServer.config.conf").forEach(function (
 
 ```
 
-## 06 - Tars客户端的实现原理
+## Tars 客户端的实现原理
 
-![客户端系统架构](http://3gimg.qq.com/trom_s/tarsdoc/client.png)
-
-
-## 07 - Tars服务端的实现原理
-
-![服务端系统架构](http://3gimg.qq.com/trom_s/tarsdoc/server.png)
+![客户端系统架构](https://raw.githubusercontent.com/tars-node/rpc/master/docs/images/client.png)
 
 
-## 08 - tars作为客户端调用第三方协议服务的示例
+## Tars 服务端的实现原理
 
-首先我们先定一个双方认可的通信协议，比如我们以Json格式作为通信协议，格式假定：
+![服务端系统架构](https://raw.githubusercontent.com/tars-node/rpc/master/docs/images/server.png)
 
-```javascript
+
+## Tars 作为客户端调用第三方协议服务
+
+我们假定以 JSON 格式作为通信协议：
+
+```json
 //客户端 --> 服务端
 {
-	P_RequestId : 0, 					//本次调用的序列号
-	P_FuncName  : 'test'				//本次调用的函数名称
-	P_Arguments : ['aa', 'bb'.....]		//本次调用的函数参数
+	"P_RequestId" : 0,
+	"P_FuncName"  : "test",
+	"P_Arguments" : ["aa", "bb"]
 }
 
 //客户端 <-- 服务端
 {
-	P_RequestId : 0, 					//本次调用的序列号
-	P_FuncName  : 'test'				//本次调用的函数名称
-	P_Arguments : ['ee', 'ff'.....]		//本次调用的返回参数
+	"P_RequestId" : 0,
+	"P_FuncName"  : "test",
+	"P_Arguments" : ["ee", "ff"]
 }
 ```
 
@@ -481,7 +471,7 @@ stream.prototype.compose = function (data) {
 /**
  *
  * 网络收取包之后，填入数据判断是否完整包
- * @param data 传入的data数据可能是TCP的各个分片，不一定是一个完整的数据请求，协议解析类内部做好数据缓存工作
+ * @param data 传入的 data 数据可能是 TCP 分片，不一定是一个完整的数据请求，协议解析类内部做好数据缓存工作
  *
  * 当有一个完整的请求时，解包函数抛出事件，需按照如下格式补充事件的数据成员：
  *
@@ -539,7 +529,7 @@ stream.prototype.reset = function () {
 
 客户端使用该协议解析器，调用服务端的代码：
 
-```
+```javascript
 var Tars      = require("@tars/tars").client;
 var Protocol = require("./ProtocolClient.js");
 
@@ -560,22 +550,22 @@ var error = function (result) {
 }
 
 prx.rpc.echo("tencent", "mig", "abc").then(success, error);
-
 ```
 
 另外，如果想要请求根据某个特征来发到某台固定的机器，可以使用如下方法：
+
 ``` javascript
 prx.getUsrName(param,{
     hashCode:userId
 }).then(success, error).done();
-
 ```
-获得客户端代理对象之后，调用服务端接口函数，此时可以传入传入hashCode参数，tars会根据hashCode来把请求分配到连接列表中固定的一台机器。
-需要注意的是：
-- 这里的userId是一个数字，二进制、八进制、十六进制都可以，但是转换成10进制的数字最好在16位数以下。javascript处理高精度数字会有精度丢失的问题。
-- 服务端机器列表固定时，同一hashCode会被分配到固定的一台机器，当服务端机器列表发生变化时，会重新分配hashCode对应的机器。
 
-## 09 - tars作为第三方协议服务的示例
+获得客户端代理对象之后，调用服务端接口函数，此时可以传入传入 hashCode 参数，Tars 会根据 hashCode 来把请求分配到连接列表中固定的一台机器。
+需要注意的是：
+- 这里的 userId 是一个数字，二进制、八进制、十六进制都可以，但是转换成 10 进制的数字最好在 16 位数以下。JavaScript处理高精度数字会有精度丢失的问题。
+- 服务端机器列表固定时，同一 hashCode 会被分配到固定的一台机器，当服务端机器列表发生变化时，会重新分配 hashCode 对应的机器。
+
+## Tars 作为第三方协议服务
 
 首先实现RPC函数处理类，注意框架的分发逻辑：
 
@@ -585,7 +575,7 @@ B.如果客户端传来的函数不是处理的函数，那么调用该处理类
 
 C.如果也没有onDispatch函数，则报错
 
-```
+```javascript
 //将该文件保存为：EchoHandle.js
 var Handle = function () {
 
@@ -606,7 +596,8 @@ module.exports = Handle;
 ```
 
 服务端启动函数的代码示例：
-```
+
+```javascript
 var Tars         = require("@tars/tars").server;
 var Protocol    = require("./ProtocolClient.js");
 var Handle      = require("./EchoHandle.js");
@@ -619,18 +610,17 @@ svr.start({
 
 ```
 
-## 09 - tars 客户端请求参数
-tars客户端代理对象调用协议接口函数时，最后一个参数可以传入一个对象，配置一些请求参数，目前支持4种请求参数。
-### dyeing
-请求染色对象。染色对象生成方式详见[@tars/dyeing](https://github.com/tars-node/dyeing "@tars/dyeing")。
-### context
-请求上下文对象。
-### packetType
-请求类型参数，1为单向请求，其他为普通请求
-### hashCode
-请求hash，必须填入js精度安全范围内的数字（Math.pow(2, 53) - 1）
+## Tars 客户端请求参数
 
-示例：
+Tars 客户端代理对象调用协议接口函数时，最后一个参数可以传入一个配置对象：
+
+* dyeing：染色对象，生成方式详见 [@tars/dyeing](https://github.com/tars-node/dyeing)。
+* context：上下文对象。
+* packetType：调用类型，1为单向请求，其他为普通请求。
+* hashCode：请求 hash，须填入 JavaScript 精度安全范围内的数字 (Math.pow(2, 53) - 1)
+
+### 示例
+
 ``` javascript
 prx.getUsrName(param,{
 	dyeing:dyeingObj,
