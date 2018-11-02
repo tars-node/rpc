@@ -29,7 +29,8 @@ var ObjectProxy = function () {
     this._iTimeout         = 3000;          //默认的调用超时时间
     this._protocol         = Protocol;      //当前端口上的协议解析器
     this._comm             = undefined;     //通信器实例
-    this._bSyncInvokeFinish = false;         //在进程间同步调用完成的消息，在流量较小的时候加快触发屏蔽逻辑
+    this._bSyncInvokeFinish = false;        //在进程间同步调用完成的消息，在流量较小的时候加快触发屏蔽逻辑
+    this._bRetryOnDestroy   = false;        //节点销毁时是否将发送失败的调用返还队列
     this._checkTimeoutInfo  = new CheckTimeoutInfo();
 };
 module.exports.ObjectProxy = ObjectProxy;
@@ -52,6 +53,7 @@ ObjectProxy.prototype.initialize = function ($ObjName, $SetName, options) {
     this._manager = new EndpointManager(this, this._comm, $ObjName, $SetName, options);
     this._objname = this._manager._objname;
     this._setname = $SetName;
+    if(options.hasOwnProperty("bRetryOnDestroy")) this._bRetryOnDestroy = options._bRetryOnDestroy;
 };
 
 ObjectProxy.prototype.setProtocol = function ($protocol) {

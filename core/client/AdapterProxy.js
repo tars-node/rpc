@@ -78,12 +78,14 @@ AdapterProxy.prototype.initialize = function () {
 AdapterProxy.prototype._resetQueue=function(){
     var self=this;
     var worker=self.worker;
-    self._pTimeoutQueueY.forEach(function (key) {
-        var reqMessage = self._pTimeoutQueueY.pop(key, true);
-        delete reqMessage.adapter;
-        delete reqMessage.RemoteEndpoint;
-        worker.pTimeoutQueue.push(reqMessage.request.iRequestId, reqMessage);
-    });
+    if(self._worker._bRetryOnDestroy){
+        self._pTimeoutQueueY.forEach(function (key) {
+            var reqMessage = self._pTimeoutQueueY.pop(key, true);
+            delete reqMessage.adapter;
+            delete reqMessage.RemoteEndpoint;
+            worker.pTimeoutQueue.push(reqMessage.request.iRequestId, reqMessage);
+        });
+    }
     self._pTimeoutQueueN.forEach(function (key) {
         var reqMessage = self._pTimeoutQueueN.pop(key, true);
         delete reqMessage.adapter;
@@ -99,8 +101,13 @@ AdapterProxy.prototype._resetQueue=function(){
 // 第一，该服务端被从主控去除之后
 // 第二，关闭当前的连接
 AdapterProxy.prototype.destroy = function () {
-    this._resetQueue();
-    this._pTrans.close();
+    var self = this;
+    self._resetQueue();
+    //加上延时关闭逻辑，处理无损重启时仍然可以正常应答的调用
+    setTimeout(function () {
+        self._pTimeoutQueueY.clear();
+        self._pTrans.close();
+    }, self._worker.timeout)
 };
 
 //请求返回了，并且Transceiver获得了一个完整的请求，由Transceiver回调该接口

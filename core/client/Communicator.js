@@ -65,7 +65,8 @@ Communicator.prototype.initialize  = function ($sFilePath) {
 };
 
 //生成代理类接口
-Communicator.prototype.stringToProxy = function ($ProxyHandle, $objName, $SetName) {
+Communicator.prototype.stringToProxy = function ($ProxyHandle, $objName, $SetName, options) {
+    options = options || {};
     this.initialize();
 
     //先检查设置的objName是否格式正确
@@ -78,7 +79,7 @@ Communicator.prototype.stringToProxy = function ($ProxyHandle, $objName, $SetNam
     //创建代理类
     var proxy = new $ProxyHandle();
     proxy._name   = $objName;
-    proxy._worker = this._createObjectProxy($objName, $SetName?$SetName:""); //生成底层使用的ObjectProxy类实例
+    proxy._worker = this._createObjectProxy($objName, $SetName?$SetName:"", options); //生成底层使用的ObjectProxy类实例
     proxy._rpc    = this._createRPC(proxy);                                  //当用在第三方协议的似乎，用来生成函数以及调用对应函数
 
     return proxy;
