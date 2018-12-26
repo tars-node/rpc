@@ -17,6 +17,7 @@ var CheckTimeoutInfo = function ()
     this.minFrequenceFailTime   = 5;        //
     this.radio                  = 0.5;      //超时比例 > 该值则认为超时了 (0.1 <= radio <= 1.0)
     this.tryTimeInterval        = 30000;    //重试时间间隔，单位毫秒
+    this.reconnectInterval      = 60000;    //非活跃节点调用失败时的重连时间间隔
 };
 
 ///////////////////////////////////////////////定义调用类///////////////////////////////////////////////////////////////

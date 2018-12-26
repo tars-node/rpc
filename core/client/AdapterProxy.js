@@ -35,8 +35,9 @@ var AdapterProxy = function () {
     this._pTimeoutQueueY        = new TQueue();     //当前端口上的已发送调用队列
     this._pTimeoutQueueN        = new TQueue();     //当前端口上的未发送调用队列
 
-    this._activeStatus          = true;                     //当前端口上的可用状态
+    this._activeStatus          = true;             //当前端口上的可用状态
     this._nextFinishInvokeTime  = 0;
+    this._nextReconnectTime     = 0;                //非活跃节点下次重连时间(对端连接卡在半连接或者无法正常处理请求时会触发)
     this._nextRetryTime         = 0;
     this._frequenceFailTime     = 0;
     this._frequenceFailInvoke   = 0;
@@ -250,6 +251,11 @@ AdapterProxy.prototype._doFinishInvoke = function ($iResultCode) {
             this._timeoutInvoke         = 0;
             this._nextFinishInvokeTime  = nowTime + this._worker._checkTimeoutInfo.checkTimeoutInterval;
         } else {
+            //这里再次断开节点，尝试重连，处理连接一直没有真正断开的情况
+            if (nowTime > this._nextReconnectTime){
+                this._nextReconnectTime = nowTime + this._worker._checkTimeoutInfo.reconnectInterval;
+                this._setInactive();
+            }
             console.info("[TARS][AdapterProxy::finishInvoke(bool), ", this._worker.name, ", " ,this._endpoint.toString(), ", retry fail]");
         }
         return ;
