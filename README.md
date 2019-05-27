@@ -264,8 +264,8 @@ node server.js
 ```
 var Tars  = require("@tars/rpc").client;
 
-Tars.set("locator", "tars.tarsregistry.QueryObj@tcp -h 127.0.0.1 -p 14002");
-Tars.set("timeout", 60000);
+Tars.setProperty("locator", "tars.tarsregistry.QueryObj@tcp -h 127.0.0.1 -p 14002");
+Tars.setProperty("timeout", 60000);
 ```
 
 上述的调用方法，与使用配置文件的方式等价。
