@@ -16,7 +16,7 @@
 
 Tars RPC 分为客户端和服务器端两个部分：
 
-* 客户端部分提供了 RPC 代理生成，消息路由和网络通讯等功能。 
+* 客户端部分提供了 RPC 代理生成，消息路由和网络通讯等功能。
 
 * 服务器端提供了远程服务暴露，请求派发，网络通讯等功能。
 
@@ -610,7 +610,7 @@ svr.start({
 
 ```
 
-## Tars 客户端请求参数
+## Tars 客户端相关参数
 
 Tars 客户端代理对象调用协议接口函数时，最后一个参数可以传入一个配置对象：
 
@@ -629,4 +629,28 @@ prx.getUsrName(param,{
     hashCode:userId
 }).then(success, error);
 
+```
+
+### 设置异常节点屏蔽策略参数
+
+满足下述条件时会认为对端节点异常：
+
+* 60 秒内, 超时调用次数大于等于 2, 超时比率大于 0.5
+
+* 连续超时次数大于 5
+
+异常节点将会被屏蔽，并每隔 30 秒重试，如果成功则恢复。
+
+若需要修改屏蔽策略，可调用 `setCheckTimeoutInfo` 方法，如下：
+
+```javascript
+proxy._worker.setCheckTimeoutInfo({
+    minTimeoutInvoke     : 2,      //策略1的最小超时次数
+    checkTimeoutInterval : 60000,  //策略1的最小时间间隔，单位ms
+    frequenceFailInvoke  : 5,      //策略2的连续超时次数
+    minFrequenceFailTime : 5000,   //策略2的最小间隔时间(从第0次到第5次超时的最小间隔时间)，单位ms
+    radio                : 0.5,    //策略1的超时比率
+    tryTimeInterval      : 30000,  //异常节点重试时间间隔，单位ms
+    reconnectInterval    : 60000   //异常节点连接成功但重试失败时，关闭连接且重新连接的间隔
+})
 ```

@@ -46,7 +46,6 @@ TCPTransceiver.prototype.reconnect = function () {
     self._socket = new net.Socket();
     self._status = Transceiver.ES_CONNECTING;
     self._socket.connect(self._endpoint.iPort, self._endpoint.sHost);
-
     self._socket_evt = {
         connect : function()     { self._status = Transceiver.ES_CONNECTED; self._adapter.doInvoke();  },
         close   : function()     { self.close(); },

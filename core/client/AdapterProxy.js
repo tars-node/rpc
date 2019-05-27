@@ -35,8 +35,9 @@ var AdapterProxy = function () {
     this._pTimeoutQueueY        = new TQueue();     //当前端口上的已发送调用队列
     this._pTimeoutQueueN        = new TQueue();     //当前端口上的未发送调用队列
 
-    this._activeStatus          = true;                     //当前端口上的可用状态
+    this._activeStatus          = true;             //当前端口上的可用状态
     this._nextFinishInvokeTime  = 0;
+    this._nextReconnectTime     = 0;                //非活跃节点下次重连时间(对端连接卡在半连接或者无法正常处理请求时会触发)
     this._nextRetryTime         = 0;
     this._frequenceFailTime     = 0;
     this._frequenceFailInvoke   = 0;
@@ -78,12 +79,14 @@ AdapterProxy.prototype.initialize = function () {
 AdapterProxy.prototype._resetQueue=function(){
     var self=this;
     var worker=self.worker;
-    self._pTimeoutQueueY.forEach(function (key) {
-        var reqMessage = self._pTimeoutQueueY.pop(key, true);
-        delete reqMessage.adapter;
-        delete reqMessage.RemoteEndpoint;
-        worker.pTimeoutQueue.push(reqMessage.request.iRequestId, reqMessage);
-    });
+    if(self._worker._bRetryOnDestroy){
+        self._pTimeoutQueueY.forEach(function (key) {
+            var reqMessage = self._pTimeoutQueueY.pop(key, true);
+            delete reqMessage.adapter;
+            delete reqMessage.RemoteEndpoint;
+            worker.pTimeoutQueue.push(reqMessage.request.iRequestId, reqMessage);
+        });
+    }
     self._pTimeoutQueueN.forEach(function (key) {
         var reqMessage = self._pTimeoutQueueN.pop(key, true);
         delete reqMessage.adapter;
@@ -99,8 +102,13 @@ AdapterProxy.prototype._resetQueue=function(){
 // 第一，该服务端被从主控去除之后
 // 第二，关闭当前的连接
 AdapterProxy.prototype.destroy = function () {
-    this._resetQueue();
-    this._pTrans.close();
+    var self = this;
+    self._resetQueue();
+    //加上延时关闭逻辑，处理无损重启时仍然可以正常应答的调用
+    setTimeout(function () {
+        self._pTimeoutQueueY.clear();
+        self._pTrans.close();
+    }, self._worker.timeout)
 };
 
 //请求返回了，并且Transceiver获得了一个完整的请求，由Transceiver回调该接口
@@ -243,6 +251,11 @@ AdapterProxy.prototype._doFinishInvoke = function ($iResultCode) {
             this._timeoutInvoke         = 0;
             this._nextFinishInvokeTime  = nowTime + this._worker._checkTimeoutInfo.checkTimeoutInterval;
         } else {
+            //这里再次断开节点，尝试重连，处理连接一直没有真正断开的情况
+            if (nowTime > this._nextReconnectTime){
+                this._nextReconnectTime = nowTime + this._worker._checkTimeoutInfo.reconnectInterval;
+                this._setInactive();
+            }
             console.info("[TARS][AdapterProxy::finishInvoke(bool), ", this._worker.name, ", " ,this._endpoint.toString(), ", retry fail]");
         }
         return ;
