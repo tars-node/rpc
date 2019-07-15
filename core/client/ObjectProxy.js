@@ -1,6 +1,7 @@
 /**
  * tars框架的客户端实现类
  */
+var assert         = require("assert");
 var Promise         = require("@tars/utils").Promise;
 var Protocol        = require("../rpc-tars").client;
 var TarsError        = require("../util/TarsError.js").TarsError;
@@ -33,6 +34,7 @@ var ObjectProxy = function () {
     this._bSyncInvokeFinish = false;        //在进程间同步调用完成的消息，在流量较小的时候加快触发屏蔽逻辑
     this._bRetryOnDestroy   = false;        //节点销毁时是否将发送失败的调用返还队列
     this._checkTimeoutInfo  = new CheckTimeoutInfo();
+    this._iTransPoolSize     = 1;            //adapter中远端连接池大小
 };
 module.exports.ObjectProxy = ObjectProxy;
 
@@ -51,10 +53,13 @@ ObjectProxy.prototype.__defineSetter__("pTimeoutQueue", function (value) { this.
 
 //初始化ObjectProxy
 ObjectProxy.prototype.initialize = function ($ObjName, $SetName, options) {
+    if(options.hasOwnProperty("bRetryOnDestroy")) this._bRetryOnDestroy = options.bRetryOnDestroy;
+    if(options.hasOwnProperty("iTransPoolSize")) this._iTransPoolSize = options.iTransPoolSize;
+    assert(typeof this._iTransPoolSize === "number" && this._iTransPoolSize > 0, "trans pool size must be > 1 number");
+
     this._manager = new EndpointManager(this, this._comm, $ObjName, $SetName, options);
     this._objname = this._manager._objname;
     this._setname = $SetName;
-    if(options.hasOwnProperty("bRetryOnDestroy")) this._bRetryOnDestroy = options._bRetryOnDestroy;
 };
 
 ObjectProxy.prototype.setProtocol = function ($protocol) {
@@ -67,6 +72,11 @@ ObjectProxy.prototype.genRequestId = function () {
 
 ObjectProxy.prototype.setCheckTimeoutInfo = function (checkTimeoutInfo) {
     Object.assign(this._checkTimeoutInfo, checkTimeoutInfo);
+}
+
+ObjectProxy.prototype.setTransPoolSize = function (size) {
+    assert(typeof size === "number" && size > 0, "trans pool size must be > 1 number");
+    this._iTransPoolSize = size;
 }
 
 //当重新连接或者第一次连接上服务端时，传输类回调当前函数

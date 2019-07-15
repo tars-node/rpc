@@ -30,7 +30,8 @@ var UDPTransceiver = require("./Transceiver.js").UDPTransceiver;
 var AdapterProxy = function () {
     this._worker                = undefined;        //所属的ObjectProxy
     this._endpoint              = undefined;        //服务端的IP地址以及端口
-    this._pTrans                = undefined;        //连接服务端的套接口
+    this._vTrans                = [];               //连接服务端的套接口列表
+    this._iTransIndex           = 0;                //当前使用的套接字接口索引
 
     this._pTimeoutQueueY        = new TQueue();     //当前端口上的已发送调用队列
     this._pTimeoutQueueN        = new TQueue();     //当前端口上的未发送调用队列
@@ -66,13 +67,28 @@ AdapterProxy.prototype.pushTimeoutQueueY = function(reqMessage)
 // 初始化代理类，主要生成网络传输类的实例
 AdapterProxy.prototype.initialize = function () {
     assert(this._endpoint.sProtocol === "tcp" || this._endpoint.sProtocol === "udp", "trans protocol must be tcp or udp");
-
-    if (this._endpoint.sProtocol === "tcp") {
-        this._pTrans = new TCPTransceiver(this, this._endpoint);
-    } else {
-        this._pTrans = new UDPTransceiver(this, this._endpoint);
+    for(var i=0; i< this._worker._iTransPoolSize;i++){
+        if (this._endpoint.sProtocol === "tcp") {
+            this._vTrans[i] = new TCPTransceiver(this, this._endpoint);
+        } else {
+            this._vTrans[i] = new UDPTransceiver(this, this._endpoint);
+        }
     }
 };
+
+AdapterProxy.prototype._getTrans = function () {
+    var vTrans = this._vTrans.slice(0), trans;
+    var hash;
+    do {
+        hash = ++this._iTransIndex % vTrans.length;
+        trans = vTrans[hash];
+        if(trans.hasConnected()) {
+            return trans;
+        }
+        vTrans.splice(hash, 1);
+    } while (vTrans.length > 0);
+    return this._vTrans[this._iTransIndex % this._vTrans.length];
+}
 
 //将队列返还给ObjectProxy，并调用worker的doInvoke，以选择其他节点重新发送
 //如果不返还请求数据，请求量很大，干掉某个节点的时候，此节点中的请求可能会超时
@@ -107,7 +123,10 @@ AdapterProxy.prototype.destroy = function () {
     //加上延时关闭逻辑，处理无损重启时仍然可以正常应答的调用
     setTimeout(function () {
         self._pTimeoutQueueY.clear();
-        self._pTrans.close();
+        self._vTrans.forEach(function (trans) {
+            trans.close();
+        })
+        self._vTrans.length=0;
     }, self._worker.timeout)
 };
 
@@ -118,8 +137,6 @@ AdapterProxy.prototype.doResponse = function ($rspMessage) {
     if (reqMessage === undefined) {
         return ;
     }
-
-    reqMessage.LocalEndpoint  = this._pTrans.LocalEndpoint;
     reqMessage.clearTimeout();
     reqMessage.adapter.finishInvoke($rspMessage.iResultCode, reqMessage);
 
@@ -149,7 +166,9 @@ AdapterProxy.prototype.doInvoke = function () {
     var self = this;
     self._pTimeoutQueueN.forEach(function (key) {
         var reqMessage = self._pTimeoutQueueN.pop(key, true);
-        if (self._pTrans.sendRequest(reqMessage.request)) {
+        var currentTrans = self._getTrans();
+        reqMessage.LocalEndpoint  = currentTrans.LocalEndpoint;
+        if (currentTrans.sendRequest(reqMessage.request)) {
             //单向请求不需要向请求成功队列里边加入数据，而是立即reject
             if(reqMessage.request.property && reqMessage.request.property.packetType === 1){
                 reqMessage.adapter._doOneWayEnd(reqMessage);
@@ -182,8 +201,10 @@ AdapterProxy.prototype._doInvokeException = function ($reqMessage) {
 AdapterProxy.prototype.invoke = function ($reqMessage) {
     $reqMessage.adapter = this;
     $reqMessage.RemoteEndpoint = this._endpoint;
-
-    if (this._pTrans.sendRequest($reqMessage.request)) {
+    var currentTrans = this._getTrans();
+    if (currentTrans.sendRequest($reqMessage.request)) {
+        //第一次尝试时仅成功后设置LocalEndpoint，因为后续可能重新发送
+        $reqMessage.LocalEndpoint  = currentTrans.LocalEndpoint;
         if($reqMessage.request.property && $reqMessage.request.property.packetType === 1){
             //单向请求不需要向请求成功队列里边加入数据
             $reqMessage.adapter._doOneWayEnd($reqMessage);
@@ -201,12 +222,28 @@ AdapterProxy.prototype.invoke = function ($reqMessage) {
 AdapterProxy.prototype._setInactive = function () {
     this._activeStatus  = false;
     this._nextRetryTime = TimeProvider.nowTimestamp() + this._worker._checkTimeoutInfo.tryTimeInterval;
-    this._pTrans.close();
+    this._vTrans.forEach(function (trans) {
+        trans.close();
+    })
 };
+
+AdapterProxy.prototype._isPoolActive = function () {
+    return this._vTrans.every(function (trans) {
+        return trans.hasConnected() || trans.isConnecting()
+    });
+}
+
+AdapterProxy.prototype._poolReconnect = function () {
+    this._vTrans.forEach(function (trans) {
+        if (!trans.isValid()) {
+            trans.reconnect();
+        }
+    })
+}
 
 // 判断当前的接口代理实例是否可用
 AdapterProxy.prototype.checkActive = function ($bForceConnect) {
-    if (this._pTrans.hasConnected() || this._pTrans.isConnecting()) {
+    if (this._isPoolActive()) {
         return true;
     }
 
@@ -215,10 +252,8 @@ AdapterProxy.prototype.checkActive = function ($bForceConnect) {
     //如果是需要强制连接
     if ($bForceConnect) {
         this._nextRetryTime = nowTime + this._worker._checkTimeoutInfo.tryTimeInterval;
-        if (!this._pTrans.isValid()) {
-            this._pTrans.reconnect();
-        }
-        return this._pTrans.hasConnected() || this._pTrans.isConnecting();
+        this._poolReconnect();
+        return this._isPoolActive();
     }
     //失效且没有到下次重试时间, 直接返回不可用
     if (!this._activeStatus && nowTime < this._nextRetryTime) {
@@ -226,16 +261,14 @@ AdapterProxy.prototype.checkActive = function ($bForceConnect) {
     }
 
     //如果还没有连接过，那么就重新连接
-    if (!this._pTrans.isValid()) {
-        this._pTrans.reconnect();
-    }
+    this._poolReconnect();
 
     if (!this._activeStatus) {
         this._nextRetryTime = nowTime + this._worker._checkTimeoutInfo.tryTimeInterval;
     }
 
     //返回当前AdapterProxy是否可用
-    return this._pTrans.hasConnected() || this._pTrans.isConnecting();
+    return this._isPoolActive();
 };
 
 //处理当前代理类有效性的检查等功能

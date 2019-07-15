@@ -28,6 +28,7 @@ TCPTransceiver.prototype.initialize = function () {
     self.socket.on("error",   self._socket_evt.error);
     self.socket.on("close",   self._socket_evt.close);
     self.socket.on("timeout", self._socket_evt.timeout);
+    self.stream.on("error",   self._socket_evt.error);
     self.stream.on("message", self._socket_evt.message);
 
     self.socket.setTimeout(this._iTimeout);
@@ -43,6 +44,7 @@ TCPTransceiver.prototype.close = function () { //主动或者发生错误之后�
             this.socket.removeListener("close",     this._socket_evt.close);
             this.socket.removeListener("data",      this._socket_evt.data);
             this.socket.removeListener("timeout",   this._socket_evt.timeout);
+            this.stream.removeListener("error",     this._socket_evt.error);
             this.stream.removeListener("message",   this._socket_evt.message);
             this.socket.destroy();
 
@@ -77,6 +79,7 @@ UDPTransceiver.prototype.doRequest = function ($msg) {
     var self = this;
 
     self.stream.reset();
+    self.stream.on("error", function (){});
     self.stream.on("message", function (request) { self.adapter.dispatch(self, request); });
     self.stream.feed($msg);
 };

@@ -117,7 +117,13 @@ stream.prototype.feed = function (data) {
                 var message = new ProtoMessageRequest();
                 message.iResultCode =  0;
                 message.sResultDesc = "";
-                message.origin      = TarsPacket.RequestPacket._readFrom(is);
+                try{
+                    message.origin      = TarsPacket.RequestPacket._readFrom(is);
+                } catch(e) {
+                    console.error("[TARS]packet error");
+                    this.emit("error", e);
+                    return
+                }
                 message.sFuncName   = message.origin.sFuncName;
 
                 //解包成功，将这个请求抛给上层框架，让框架去做分发

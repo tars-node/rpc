@@ -1,28 +1,28 @@
 var TarsClient  = require("../../../../protal.js").client;
 var TarsProxy = require("./NodeTarsProxy").tars;
 
-//Ê¹ÓÃÅäÖÃÎÄ¼ş³õÊ¼»¯Í¨ĞÅÆ÷
+//ä½¿ç”¨é…ç½®æ–‡ä»¶åˆå§‹åŒ–é€šä¿¡å™¨
 TarsClient.initialize("./config.conf");
 
-//Éú³É´úÀíÀà
-//var prx = TarsClient.stringToProxy(TarsProxy.NodeTarsProxy, TarsClient.configure.get("main.DevServer"));        //¿Í»§¶ËºÍ·şÎñ¶Ë¶¼²¿ÊğÔÚIDC»ú·¿¡£¿Í»§¶ËÍ¨¹ıÖ÷¿Ø£¬²éÑ¯»î¶¯ÁĞ±í£¬È»ºóµ÷ÓÃ·şÎñ¶Ë
-//var prx = TarsClient.stringToProxy(TarsProxy.NodeTarsProxy, TarsClient.configure.get("main.ProxyServer"));      //¿Í»§¶Ë²¿ÊğÔÚ±¾µØ£¬·şÎñ¶Ë²¿ÊğÔÚIDC»ú·¿¡£¿Í»§¶ËÍ¨¹ı¡°ÌØ±ğ´úÀí¡±£¬Á¬½ÓIDC»úÆ÷
+//ç”Ÿæˆä»£ç†ç±»
+//var prx = TarsClient.stringToProxy(TarsProxy.NodeTarsProxy, TarsClient.configure.get("main.DevServer"));        //å®¢æˆ·ç«¯å’ŒæœåŠ¡ç«¯éƒ½éƒ¨ç½²åœ¨IDCæœºæˆ¿ã€‚å®¢æˆ·ç«¯é€šè¿‡ä¸»æ§ï¼ŒæŸ¥è¯¢æ´»åŠ¨åˆ—è¡¨ï¼Œç„¶åè°ƒç”¨æœåŠ¡ç«¯
+//var prx = TarsClient.stringToProxy(TarsProxy.NodeTarsProxy, TarsClient.configure.get("main.ProxyServer"));      //å®¢æˆ·ç«¯éƒ¨ç½²åœ¨æœ¬åœ°ï¼ŒæœåŠ¡ç«¯éƒ¨ç½²åœ¨IDCæœºæˆ¿ã€‚å®¢æˆ·ç«¯é€šè¿‡â€œç‰¹åˆ«ä»£ç†â€ï¼Œè¿æ¥IDCæœºå™¨
 var servant=TarsClient.configure.get("main.LocalServer");
-var prx = TarsClient.stringToProxy(TarsProxy.NodeTarsProxy,servant);      //¿Í»§¶ËºÍ·şÎñ¶Ë¶¼²¿ÊğÔÚ±¾µØ¡£¿Í»§¶ËÖ±Á¬±¾µØ·şÎñ
+var prx = TarsClient.stringToProxy(TarsProxy.NodeTarsProxy,servant);      //å®¢æˆ·ç«¯å’ŒæœåŠ¡ç«¯éƒ½éƒ¨ç½²åœ¨æœ¬åœ°ã€‚å®¢æˆ·ç«¯ç›´è¿æœ¬åœ°æœåŠ¡
 
-//Éú³É»Øµ÷Àà
+//ç”Ÿæˆå›è°ƒç±»
 var success = function (result) {
-    console.log("remote server endpoint:",             result.request.RemoteEndpoint.toString());   //±¾´Îµ÷ÓÃ¶ÔÓ¦µÄ·şÎñ¶ËµØÖ·£¬ÀàĞÍÎª['tars-utils'].Endpoint
-    console.log("result.response.costtime:",           result.response.costtime);                   //±¾µØµ÷ÓÃµÄºÄÊ±£¬µ¥Î»ÎªºÁÃë
-    console.log("result.response.return: ",            result.response.return);                     //º¯ÊıµÄ·µ»ØÖµ£¨ÔÚtarsÎÄ¼şÖĞ¶¨Òå£©
-    console.log("result.response.arguments.sValue1:",  result.response.arguments.sValue1);          //º¯ÊıµÄout²ÎÊı£¨ÔÚtarsÎÄ¼şÖĞ¶¨Òå£©
-    console.log("result.response.arguments.sValue1:",  result.response.arguments.sValue2);          //º¯ÊıµÄout²ÎÊı£¨ÔÚtarsÎÄ¼şÖĞ¶¨Òå£©
+    console.log("remote server endpoint:",             result.request.RemoteEndpoint.toString());   //æœ¬æ¬¡è°ƒç”¨å¯¹åº”çš„æœåŠ¡ç«¯åœ°å€ï¼Œç±»å‹ä¸º['tars-utils'].Endpoint
+    console.log("result.response.costtime:",           result.response.costtime);                   //æœ¬åœ°è°ƒç”¨çš„è€—æ—¶ï¼Œå•ä½ä¸ºæ¯«ç§’
+    console.log("result.response.return: ",            result.response.return);                     //å‡½æ•°çš„è¿”å›å€¼ï¼ˆåœ¨tarsæ–‡ä»¶ä¸­å®šä¹‰ï¼‰
+    console.log("result.response.arguments.sValue1:",  result.response.arguments.sValue1);          //å‡½æ•°çš„outå‚æ•°ï¼ˆåœ¨tarsæ–‡ä»¶ä¸­å®šä¹‰ï¼‰
+    console.log("result.response.arguments.sValue1:",  result.response.arguments.sValue2);          //å‡½æ•°çš„outå‚æ•°ï¼ˆåœ¨tarsæ–‡ä»¶ä¸­å®šä¹‰ï¼‰
 }
 
 var error = function (result) {
-    console.log("result.response.error.code: ",        result.response.error.code);                 //±¾´Îµ÷ÓÃÊ§°ÜµÄ´íÎó´úÂë
-    console.log("result.response.error.message: ",     result.response.error.message);              //±¾´Îµ÷ÓÃÊ§°ÜµÄ´íÎóÃèÊö
+    console.log("result.response.error.code: ",        result.response.error.code);                 //æœ¬æ¬¡è°ƒç”¨å¤±è´¥çš„é”™è¯¯ä»£ç 
+    console.log("result.response.error.message: ",     result.response.error.message);              //æœ¬æ¬¡è°ƒç”¨å¤±è´¥çš„é”™è¯¯æè¿°
 }
 
-//µ÷ÓÃ½Ó¿Ú
+//è°ƒç”¨æ¥å£
 prx.getUsrName("czzou").then(success, error).done();
