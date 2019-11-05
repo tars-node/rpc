@@ -53,6 +53,7 @@ ObjectProxy.prototype.__defineSetter__("pTimeoutQueue", function (value) { this.
 
 //初始化ObjectProxy
 ObjectProxy.prototype.initialize = function ($ObjName, $SetName, options) {
+    options = options || {};
     if(options.hasOwnProperty("bRetryOnDestroy")) this._bRetryOnDestroy = options.bRetryOnDestroy;
     if(options.hasOwnProperty("iTransPoolSize")) this._iTransPoolSize = options.iTransPoolSize;
     assert(typeof this._iTransPoolSize === "number" && this._iTransPoolSize > 0, "trans pool size must be > 1 number");
