@@ -18,7 +18,7 @@ export interface InvokeProperty {
   context?: Record<string, string>,
   packetType?: 0 | 1,
   hashCode?: number,
-  consistentHash?: boolean
+  consistentHash?: string | number
 }
 
 export interface TarsCurrent {
