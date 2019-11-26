@@ -110,12 +110,13 @@ module.exports.UDPTransceiver = UDPTransceiver;
 
 UDPTransceiver.prototype.__defineGetter__("LocalEndpoint", function () {
     if (this._localEndpoint === undefined && this._socket && this._status == Transceiver.ES_CONNECTED) {
-        this._localEndpoint = new Endpoint();
-        this._localEndpoint.sProtocol = "udp";
-        this._localEndpoint.sHost     = this._socket.address().address;
-        this._localEndpoint.iPort     = this._socket.address().port;
+        try{
+            this._localEndpoint = new Endpoint();
+            this._localEndpoint.sProtocol = "udp";
+            this._localEndpoint.sHost     = this._socket.address().address;
+            this._localEndpoint.iPort     = this._socket.address().port;
+        } catch(e){}
     }
-
     return this._localEndpoint;
 });
 
