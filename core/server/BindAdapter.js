@@ -72,7 +72,7 @@ BindAdapter.prototype.dispatch = function ($Transceiver, $protoMessage) {
         if (this.isTarsProtocol() === false) {
             var Func = ($protoMessage.sFuncName && this.handleImp[$protoMessage.sFuncName]) || this.handleImp["doRequest"];
             if (Func) {
-                Func.call(this.handle, current, $protoMessage.origin);
+                Func.call(this.handleImp, current, $protoMessage.origin);
             } else {
                 current.sendErrorResponse(TarsError.SERVER.FUNC_NOT_FOUND, "Not Found Func By Name:" + ($protoMessage.sFuncName?$protoMessage.sFuncName:"doRequest"));
             }

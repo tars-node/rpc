@@ -71,7 +71,7 @@ Communicator.prototype.stringToProxy = function ($ProxyHandle, $objName, $SetNam
 
     //先检查设置的objName是否格式正确
     assert($objName != undefined, "please specify the parameter value for objName");
-    assert($objName.valueOf("@") != -1 || $objName.valueOf("@") == -1 && this.getProperty("locator") != undefined, "please specify the parameter value for registry locator");
+    assert($objName.indexOf("@") != -1 || $objName.indexOf("@") == -1 && this.getProperty("locator") != undefined, "please specify the parameter value for registry locator");
 
     $objName = $objName.replace(/^[\s\t ]+|[\s\t ]+$/g, '');
     $objName = $objName.replace(/\s{2,}/g, ' ');

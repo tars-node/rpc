@@ -1,18 +1,18 @@
 # @ tars / rpc
 
-`@ tars / rpc` is the Tars RPC calling framework, which provides an infrastructure for making RPC calls between multiple server processes. It can achieve the following capabilities:
+`@ tars/rpc` is the Tars RPC calling framework, which provides an infrastructure for making RPC calls between multiple server processes. It can achieve the following capabilities:  
 
--Use [tars2node] (https://github.com/tars-node/tars2node) to translate the Tars file into client proxy class code for the client to call any Tars service.
+- Use [tars2node] (https://github.com/tars-node/tars2node) to translate the Tars file into client proxy class code for the client to call any Tars service.
 
--After using [tars2node] (https://github.com/tars-node/tars2node) to translate Tars files into server code, you can implement standard Tars service, which can be used by any client using Tars / TUP protocol Call directly.
+- After using [tars2node] (https://github.com/tars-node/tars2node) to translate Tars files into server code, you can implement standard Tars service, which can be used by any client using Tars / TUP protocol Call directly.
 
--Remote log, dye log, attribute report, alarm report and service communication.
+- Remote log, dye log, attribute report, alarm report and service communication.
 
--Create a client proxy class for a custom communication protocol (such as a protocol using JSON format).
+- Create a client proxy class for a custom communication protocol (such as a protocol using JSON format).
 
--Create a server for a custom communication protocol (such as a protocol using JSON format).
+- Create a server for a custom communication protocol (such as a protocol using JSON format).
 
--Module: @ tars / registry, Function: According to the service Obj name, go to the master to query the IP list available for the service.
+- Module: @ tars / registry, Function: According to the service Obj name, go to the master to query the IP list available for the service.
 
 Tars RPC is divided into two parts, client and server:
 
@@ -22,27 +22,25 @@ Tars RPC is divided into two parts, client and server:
 
 ## Installation
 
-`` `bash
-npm install @ tars / rpc
-`` `
+`npm install @ tar/rpc`
 
 ## A note on protocols and Tars files
 
-** Before in-depth knowledge of Tars, let's clarify the relationship between the `Tars encoding protocol`,` TUP packet protocol`, and `TARS packet protocol`: **
+**Before in-depth knowledge of Tars, let's clarify the relationship between the `Tars encoding protocol`,` TUP packet protocol`, and `TARS packet protocol`:**
 
--Tars encoding protocol is a data encoding and decoding rule. It encodes data types such as shaping, enumeration values, strings, sequences, dictionaries, and custom structures into binary data streams according to certain rules. After receiving the binary data stream, the opposite end deserializes according to the corresponding rules to obtain the original value.
+- Tars encoding protocol is a data encoding and decoding rule. It encodes data types such as shaping, enumeration values, strings, sequences, dictionaries, and custom structures into binary data streams according to certain rules. After receiving the binary data stream, the opposite end deserializes according to the corresponding rules to obtain the original value.
 
--Tars encoding protocol uses a type of unsigned char called TAG to identify variables. For example, the TAG value of a variable is 100 (the value is customized by the developer). When encoding the variable value, it also encodes the TAG value. When the opposite end needs to read the value of the variable, it looks for a data segment with a TAG value of 100 in the data stream, and after finding it, reads out the data part according to the rule, which is the value of the variable.
+- Tars encoding protocol uses a type of unsigned char called TAG to identify variables. For example, the TAG value of a variable is 100 (the value is customized by the developer). When encoding the variable value, it also encodes the TAG value. When the opposite end needs to read the value of the variable, it looks for a data segment with a TAG value of 100 in the data stream, and after finding it, reads out the data part according to the rule, which is the value of the variable.
 
--The positioning of the Tars encoding protocol is a set of encoding rules. The Tars protocol serialized data can not only be transmitted over the network, but also stored in a database.
+- The positioning of the Tars encoding protocol is a set of encoding rules. The Tars protocol serialized data can not only be transmitted over the network, but also stored in a database.
 
--The TUP packet protocol is an upper-layer encapsulation of the Tars encoding protocol and is positioned as a communication protocol. It uses the variable name as the keyword of the variable. When encoding, the variable name is packed into the data stream; when decoding, the corresponding data area is found according to the variable name, and the data area is deserialized according to the data type to obtain the original value.
+- The TUP packet protocol is an upper-layer encapsulation of the Tars encoding protocol and is positioned as a communication protocol. It uses the variable name as the keyword of the variable. When encoding, the variable name is packed into the data stream; when decoding, the corresponding data area is found according to the variable name, and the data area is deserialized according to the data type to obtain the original value.
 
--The TUP packet protocol has a built-in <Map> type of Tars encoding protocol. The key of the <Map> is the variable name and the value is the binary data serialized by Tars encoding.
+- The TUP packet protocol has a built-in <Map> type of Tars encoding protocol. The key of the <Map> is the variable name and the value is the binary data serialized by Tars encoding.
 
--The data packet encapsulated by the TUP packet protocol can be sent directly to the Tars server, and the server can directly deserialize to get the original value.
+- The data packet encapsulated by the TUP packet protocol can be sent directly to the Tars server, and the server can directly deserialize to get the original value.
 
--The TARS packet protocol is a communication protocol encapsulated using the Tars encoding protocol for RequestPacket (request structure) and ResponsePacket (result structure). The structure contains important information such as the request sequence number, protocol type, and binary data after RPC parameter serialization.
+- The TARS packet protocol is a communication protocol encapsulated using the Tars encoding protocol for RequestPacket (request structure) and ResponsePacket (result structure). The structure contains important information such as the request sequence number, protocol type, and binary data after RPC parameter serialization.
 
 For the encoding and decoding rules of the Tars encoding protocol and the writing method of Tars files, please refer to [@ tars / steamdocument] (https://github.com/tars-node/stream/blob/master/README.md).
 
@@ -52,23 +50,11 @@ When using, you can define the communication description file according to your 
 
 1. Clone this project.
 
-2. Execute in the root directory of the project:
+2. Execute in the root directory of the project: `npm install`
 
-`` `bash
-npm install
-`` `
+3. Start the RPC server program in the `/rpc/examples/rpc-tars/demo.1/server.node.1` directory: `node main.js`
 
-3. Start the RPC server program in the `/ rpc / examples / rpc-tars / demo.1 / server.node.1` directory:
-
-`` `bash
-node main.js
-`` `
-
-4. Start the RPC client program in the `/ rpc / examples / rpc-tars / demo.1 / client.node.proxy` directory:
-
-`` `bash
-node main.js
-`` `
+4. Start the RPC client program in the `/rpc/examples/rpc-tars/demo.1/client.node.proxy` directory:`node main.js`
 
 ## Development steps
 
@@ -147,7 +133,7 @@ var stUser = new TRom.User_t ();
 stUser.name = "tencent-mig";
 
 prx.getall (stUser) .then (success, error) .done ();
-`` `
+```
 
 Save the above code as `client.js` and use the following command to call the server.
 
@@ -155,11 +141,11 @@ Save the above code as `client.js` and use the following command to call the ser
 node client.js
 ```
 
->result.response.costtime: 7
+> result.response.costtime: 7
 
->result.response.return: 200
+> result.response.return: 200
 
->result.response.arguments.stResult: { id: 10000, iLevel: 10001 }
+> result.response.arguments.stResult: { id: 10000, iLevel: 10001 }
 As long as the corresponding Tars file is available, Tars services provided by C ++, Java, PHP, Node.js can be called.
 
 4. Generate server code based on Tars file:
@@ -170,8 +156,8 @@ tars2node --server NodeJsComm.tars
 
 5. Writing the server program
 
-[tars2node] (https://github.com/tars-node/tars2node) The tool will generate `NodeJsComm.js` and` NodeJsCommImp.js`.
-Developers ** Do not need and try not to change ** NodeJsComm.js`. This file mainly implements functions such as structure encoding and decoding, function parameter encoding and decoding, and function distribution.
+[tars2node](https://github.com/tars-node/tars2node) The tool will generate `NodeJsComm.js` and` NodeJsCommImp.js`.
+Developers **Do not need and try not to change** `NodeJsComm.js`. This file mainly implements functions such as structure encoding and decoding, function parameter encoding and decoding, and function distribution.
 Developers only need to fill in the RPC functions defined in `NodeJsCommImp.js` and implement the business logic.
 
 ```javascript
@@ -229,7 +215,7 @@ svr.start({
 
 console.log("server started.");
 ```
-将上述代码保存为server.js，使用如下命令启动即可。
+Save the above code as server.js, and start it with the following command.
 
 ```bash
 node server.js
@@ -241,7 +227,7 @@ In the demo code we mentioned that initialize does not have to display the call,
 
 First we look at the format and necessary parameters of the configuration file:
 
-`` `
+```
 <tars>
     <application>
         <client>
@@ -250,21 +236,21 @@ First we look at the format and necessary parameters of the configuration file:
         </ client>
     </ application>
 </ tars>
-`` `
+```
 
-This configuration file is automatically generated by `tarsnode`. We mainly use` tars.application.client.locator` and `tars.application.client.async-invoke-timeout`.
+This configuration file is automatically generated by `tarsnode`. We mainly use `tars.application.client.locator` and `tars.application.client.async-invoke-timeout`.
 
 > When can I not call the initialize function?
 > If we generate a server-side proxy, each server uses the direct connection mode, that is, the IP address specified in stringToProxy does not need to be initialized.
 
 In addition to using the configuration file to set these two parameters, we can call [@ tars / rpc] .client to expose the method for setting:
 
-`` `
+```
 var Tars = require ("@ tars / rpc"). client;
 
 Tars.setProperty ("locator", "tars.tarsregistry.QueryObj@tcp -h 127.0.0.1 -p 14002");
 Tars.setProperty ("timeout", 60000);
-`` `
+```
 
 The above calling method is equivalent to using the configuration file.
 
@@ -276,7 +262,7 @@ Tars has three methods to create a standard Tars service:
 
 Using this method is the same as using Tars C ++. We need to configure Obj for the service on the Tars management platform, and then automatically generate a configuration file containing the listening port by `tarsnode` when starting the program. The service framework depends on this configuration to bind the port Start the service.
 
-! [tars service creation] (https://raw.githubusercontent.com/tars-node/rpc/master/docs/images/platform.png)
+![tars service creation](https://raw.githubusercontent.com/tars-node/rpc/master/docs/images/platform.png)
 
 The configuration file generated by tarsnode is similar to the following:
 
@@ -354,11 +340,11 @@ svr.initialize ("./ TRom.NodeJsTestServer.config.conf", function (server) {
 
 // STEP03 After initializing the service in the previous step, start the service
 svr.start ();
-`` `
+```
 
 * Display configuration server information
 
-`` `javascript
+```javascript
 // STEP01 introduces key modules
 var Tars = require ("@ tars / tars"). server;
 var TRom = require ("./ NodeJsCommImp.js"). TRom;
@@ -375,11 +361,11 @@ svr.start ({
 });
 
 console.log ("server started.");
-`` `
+```
 
 * From the configuration file generated by `tarsnode`, select some services to start
 
-`` `javascript
+```javascript
 // STEP01 introduces key modules
 var Tars = require ("@ tars / rpc");
 var TRom = require ("./ NodeJsCommImp.js");
@@ -394,23 +380,23 @@ Tars.server.getServant ("./ TRom.NodeJsTestServer.config.conf"). ForEach (functi
     svr.start (config);
 });
 
-`` `
+```
 
 ## Tars client implementation principle
 
-! [Client System Architecture] (https://raw.githubusercontent.com/tars-node/rpc/master/docs/images/client.png)
+![Client System Architecture](https://raw.githubusercontent.com/tars-node/rpc/master/docs/images/client.png)
 
 
 ## Tars server implementation
 
-! [Server-side system architecture] (https://raw.githubusercontent.com/tars-node/rpc/master/docs/images/server.png)
+![Server-side system architecture](https://raw.githubusercontent.com/tars-node/rpc/master/docs/images/server.png)
 
 
 ## Tars calls a third-party protocol service as a client
 
 We assume the communication protocol is in JSON format:
 
-`` `json
+```json
 // Client-> Server
 {
 "P_RequestId": 0,
@@ -424,11 +410,11 @@ We assume the communication protocol is in JSON format:
 "P_FuncName": "test",
 "P_Arguments": ["ee", "ff"]
 }
-`` `
+```
 
 Implement protocol analysis class:
 
-`` `javascript
+```javascript
 // Save the file as Protocol.js
 var EventEmitter = require ("events"). EventEmitter;
 var util = require ("@ tars / util");
@@ -444,19 +430,19 @@ stream.prototype .__ defineGetter __ ("name", function () {return this._name;});
 
 module.exports = stream;
 
-/ **
+/**
  * Packaging method based on incoming data
  * @param request
  * request.iRequestId: the request sequence number generated by the framework
  * request.sFuncName: function name
  * request.Arguments: function's argument list
- * /
+ */
 stream.prototype.compose = function (data) {
     var str = JSON.stringify ({
-P_RequestId: data.iRequestId,
-P_FuncName: data.sFuncName,
-P_Arguments: data.Arguments
-});
+        P_RequestId: data.iRequestId,
+        P_FuncName: data.sFuncName,
+        P_Arguments: data.Arguments
+    });
 
     var len = 4 + Buffer.byteLength (str);
     var buf = new Buffer (len);
@@ -466,7 +452,7 @@ P_Arguments: data.Arguments
     return buf;
 }
 
-/ **
+/**
  *
  * After receiving the packet from the network, fill in the data to determine whether the packet is complete
  * @param data The incoming data may be a TCP fragment, not necessarily a complete data request. The protocol parsing class does the data caching work inside.
@@ -517,13 +503,13 @@ stream.prototype.feed = function (data) {
 }
 
 /**
-* Reset the current protocol parser
-  * /
+ * Reset the current protocol parser
+*/
 stream.prototype.reset = function () {
      delete this._data;
      this._data = undefined;
 }
-`` `
+```
 
 The client uses the protocol parser to call the server code:
 
@@ -552,28 +538,28 @@ prx.rpc.echo("tencent", "mig", "abc").then(success, error);
 
 In addition, if you want to request a fixed machine based on a certain characteristic, you can use the following method:
 
-`` `javascript
+```javascript
 prx.getUsrName (param, {
     hashCode: userId
 }). then (success, error) .done ();
-`` `
+```
 
 After obtaining the client proxy object, the server-side interface function is called. At this time, the hashCode parameter can be passed in. Tars will allocate the request to a fixed machine in the connection list according to the hashCode.
-have to be aware of is:
--The userId here is a number, which can be binary, octal, or hexadecimal, but the number converted to decimal is preferably less than 16 digits. JavaScript has a problem of losing precision when dealing with high-precision numbers.
--When the server machine list is fixed, the same hashCode will be assigned to a fixed machine. When the server machine list changes, the machine corresponding to the hashCode will be reassigned.
+have to be aware of is:  
+- The userId here is a number, which can be binary, octal, or hexadecimal, but the number converted to decimal is preferably less than 16 digits. JavaScript has a problem of losing precision when dealing with high-precision numbers.
+- When the server machine list is fixed, the same hashCode will be assigned to a fixed machine. When the server machine list changes, the machine corresponding to the hashCode will be reassigned.
 
 ## Tars as a Third Party Agreement
 
-First implement the RPC function processing class, pay attention to the framework's distribution logic:
+First implement the RPC function processing class, pay attention to the framework's distribution logic:  
 
-A. If the function name passed from the client is a function of the processing class, then the framework limitedly calls the corresponding function
+A. If the function name passed from the client is a function of the processing class, then the framework limitedly calls the corresponding function  
 
-B. If the function passed from the client is not a processing function, then the ** `onDispatch` function of the processing class is called, and the function is responsible for processing the request
+B. If the function passed from the client is not a processing function, then the ** `onDispatch` function of the processing class is called, and the function is responsible for processing the request  
 
-C. If there is no onDispatch function, an error is reported
+C. If there is no onDispatch function, an error is reported  
 
-`` `javascript
+```javascript
 // Save the file as: EchoHandle.js
 var Handle = function () {
 
@@ -619,7 +605,7 @@ When Tars client proxy object calls the protocol interface function, the last pa
 
 ### Examples
 
-`` `javascript
+```javascript
 prx.getUsrName (param, {
 dyeing: dyeingObj,
 context: {xxx: xxx},
@@ -627,7 +613,7 @@ packetType: 1,
     hashCode: userId
 }). then (success, error);
 
-`` `
+```
 
 ### Setting Exception Node Blocking Policy Parameters
 
@@ -641,7 +627,7 @@ The anomalous node will be blocked and retry every 30 seconds, and recover if su
 
 If you need to modify the blocking strategy, you can call the setCheckTimeoutInfo method, as follows:
 
-`` `javascript
+```javascript
 proxy._worker.setCheckTimeoutInfo ({
     minTimeoutInvoke: 2, // Minimum number of timeouts for strategy 1
     checkTimeoutInterval: 60000, // Minimum time interval for strategy 1, in ms
