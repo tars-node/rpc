@@ -40,6 +40,7 @@ stream.prototype.compose = function ($protoMessage) {
     req.iVersion        = 1;
     req.cPacketType     = packetType;
     req.iMessageType    = 0;
+    req.iTimeout        = $protoMessage.iTimeout || 0;
     req.iRequestId      = $protoMessage.iRequestId;
     req.sServantName    = $protoMessage.sServantName;
     req.sFuncName       = $protoMessage.sFuncName;

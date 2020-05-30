@@ -158,6 +158,7 @@ ObjectProxy.prototype.tars_invoke = function ($FuncName, $BinBuffer, $Property) 
     reqMessage.request.appBuffer    = $BinBuffer;
     reqMessage.request.property     = extProperty;
     reqMessage.request.configure    = this._comm.configure;
+    reqMessage.request.iTimeout     = this._iTimeout;
     reqMessage.promise              = Promise.defer();
     reqMessage.worker               = this;
     reqMessage.setTimeout(this._iTimeout);
