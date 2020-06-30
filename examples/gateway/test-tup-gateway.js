@@ -79,39 +79,3 @@ async function test(){
 }
 
 test()
-
-
-// console.log("postData:", postData)
-
-// var options = {
-//     hostname : '9.134.37.161',    //GatewayServer的地址
-//     port     : 3015,              //atewayServer的端口
-//     path     : '/tup',
-//     method   : 'POST',
-//     headers  : {
-//         'Content-Type': 'application/octet-stream',
-//         'Content-Length': postData.length
-//     }
-// };
-
-// var req = http.request(options, function(res) {
-//     res.on('data', function (chunk) {
-//         console.log("xxxx", chunk)
-//         //小回包示例
-//         var data = new TarsStream.BinBuffer(new Buffer(chunk));
-//         var tup  = new TarsStream.Tup();
-//         tup.decode(data);
-
-//         var stRsp = tup.readStruct("stRsp", Hello.AddRsp);
-//         var ret = tup.readInt32("")
-//         console.log("ret:", ret, " stRsp:", stRsp.toObject())
-
-//     });
-// });
-
-// req.on('error', function(e) {
-//     console.log('problem with request: ' + e.message);
-// });
-
-// req.write(postData);
-// req.end();
