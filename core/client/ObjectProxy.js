@@ -27,6 +27,7 @@ var ObjectProxy = function () {
     this._setname          = "";            //使用stringtoProxy时指定的set名称
     this._pTimeoutQueue    = new TQueue();  //全局数据发送队列
     this._manager          = undefined;     //对端连接管理器
+    this._version          = 1;             //协议号  tars:1 tup-complex:2  tup-simple:3
     this._requestId        = 1;             //当前服务队列的请求ID号
     this._iTimeout         = 3000;          //默认的调用超时时间
     this._protocol         = Protocol;      //当前端口上的协议解析器
@@ -41,6 +42,9 @@ module.exports.ObjectProxy = ObjectProxy;
 //定义ObjectProxy的属性函数
 ObjectProxy.prototype.__defineSetter__("communicator", function (value){ this._comm = value; });
 ObjectProxy.prototype.__defineGetter__("communicator", function (){ return this._comm; });
+
+ObjectProxy.prototype.__defineGetter__("version", function () { return this._version; });
+ObjectProxy.prototype.__defineSetter__("version", function (value) { this._version = value; });
 
 ObjectProxy.prototype.__defineGetter__("timeout", function () { return this._iTimeout; });
 ObjectProxy.prototype.__defineSetter__("timeout", function (value) { this._iTimeout = value; });
@@ -148,6 +152,9 @@ ObjectProxy.prototype.tars_invoke = function ($FuncName, $BinBuffer, $Property) 
         if ($Property.hasOwnProperty("consistentHash")) {
             extProperty.consistentHash = $Property.consistentHash;
         }
+        if($Property.hasOwnProperty("iVersion")){
+            extProperty.iVersion = $Property.iVersion;
+        }
     }
 
     //构造请求
@@ -164,7 +171,14 @@ ObjectProxy.prototype.tars_invoke = function ($FuncName, $BinBuffer, $Property) 
     reqMessage.setTimeout(this._iTimeout);
     return this.invoke(reqMessage);
 };
-
+ObjectProxy.prototype.tup_invoke = function ($FuncName, $UniAttribute, $Property) {
+    if ($Property === null || typeof $Property !== 'object') {
+        $Property = {};
+    }
+    $Property.iVersion = this.version;
+    $UniAttribute._iver = this.version;
+    return this.tars_invoke($FuncName, $UniAttribute.encode(), $Property);
+}
 ObjectProxy.prototype.setSyncInvokeFinish = function(bSync){
     var self = this;
     //不在node-agent中运行，单进程运行，无需设置同步

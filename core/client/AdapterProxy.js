@@ -345,7 +345,7 @@ AdapterProxy.prototype.finishInvoke = function ($iResultCode, $reqMessage) {
         packetType = 1;
 
     //如果是在正式环境，则上报统计信息(单向调用不需要上报)
-    if (process.env.TARS_MONITOR && packetType !== 1) {
+    if (process.env.TARS_MONITOR && packetType !== 1 && $reqMessage.worker.version == 1) {
         //正式环境需要上报统计数据
 
         var masterSetInfo = '', masterModuleName = '';

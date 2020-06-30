@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for rpc/core/client/Transceiver.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">rpc/core/client/</a> Transceiver.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">67.59% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>73/108</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">60.87% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>14/23</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>12/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">70.1% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>68/97</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48×</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * 客户端网络传输类
+ */
+var net      = require("net");
+var dgram    = require("dgram");
+var Endpoint = require("@tars/utils").Endpoint;
+&nbsp;
+var Transceiver = <span class="fstat-no" title="function not covered" >function () {</span>
+&nbsp;
+};
+Transceiver.ES_UNCONNECTED = 1;  //没有连接
+Transceiver.ES_CONNECTING  = 2;  //正在连接中
+Transceiver.ES_CONNECTED   = 3;  //已经连接上
+&nbsp;
+/////////////////////////////////////////////TCP协议套接口类////////////////////////////////////////////////////////////
+var TCPTransceiver = function ($adapter, $endpoint) {
+    this._adapter       = $adapter;
+    this._endpoint      = $endpoint;
+&nbsp;
+    this._stream        = undefined; //协议解析器的实例
+    this._socket        = undefined;
+    this._status        = Transceiver.ES_UNCONNECTED;
+    this._localEndpoint = undefined;
+    this._socket_evt    = undefined;
+};
+module.exports.TCPTransceiver = TCPTransceiver;
+&nbsp;
+//定义TCP接口的属性
+//当socket存在，并且处于已连接状态时，才去获取本地端口
+TCPTransceiver.prototype.__defineGetter__("LocalEndpoint", function () {
+    if (this._localEndpoint === undefined &amp;&amp; this._socket &amp;&amp; this._status == Transceiver.ES_CONNECTED) {
+        this._localEndpoint = new Endpoint();
+        this._localEndpoint.sProtocol = "tcp";
+        this._localEndpoint.sHost     = this._socket.localAddress;
+        this._localEndpoint.iPort     = this._socket.localPort;
+    }
+&nbsp;
+    return this._localEndpoint;
+});
+&nbsp;
+//重新连接
+TCPTransceiver.prototype.reconnect = function () {
+    var self = this;
+&nbsp;
+    self._stream = new self._adapter._worker._protocol();
+    //设置协议类型，feed的时候需要区分tars和tup编码
+    self._stream._version = self._adapter._worker.version || <span class="branch-1 cbranch-no" title="branch not covered" >1;</span>
+    self._socket = new net.Socket();
+    self._status = Transceiver.ES_CONNECTING;
+    self._socket.connect(self._endpoint.iPort, self._endpoint.sHost);
+    self._socket_evt = {
+        connect : function()     { self._status = Transceiver.ES_CONNECTED; self._adapter.doInvoke();  },
+        close   : function()     { self.close(); },
+        error   : <span class="fstat-no" title="function not covered" >function()     {</span> <span class="cstat-no" title="statement not covered" >self.close(); </span>},
+        data    : function(data) { self._stream.feed(data); }
+    };
+&nbsp;
+    self._socket.on("connect", self._socket_evt.connect);
+    self._socket.on("data",    self._socket_evt.data);
+    self._socket.on("error",   self._socket_evt.error);
+    self._socket.on("close",   self._socket_evt.close);
+    self._stream.on("message", function($protoMessage) { self._adapter.doResponse($protoMessage); });
+};
+&nbsp;
+//发送未经编码的请求
+TCPTransceiver.prototype.sendRequest = function ($protoMessage) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if($protoMessage &amp;&amp; this._endpoint &amp;&amp; this._endpoint.setId)
+    {
+<span class="cstat-no" title="statement not covered" >        $protoMessage.setId = this._endpoint.setId;</span>
+    }
+&nbsp;
+    if (this._status === Transceiver.ES_CONNECTED) {
+        this._socket.write(this._stream.compose($protoMessage));
+        return true;
+    }
+&nbsp;
+    return false;
+};
+&nbsp;
+TCPTransceiver.prototype.hasConnected = function () { return this._status === Transceiver.ES_CONNECTED;  };
+TCPTransceiver.prototype.isConnecting = function () { return this._status === Transceiver.ES_CONNECTING; };
+TCPTransceiver.prototype.isValid      = function () { return this._status !== Transceiver.ES_UNCONNECTED;};
+&nbsp;
+//关闭当前网络套接字
+TCPTransceiver.prototype.close = function () {
+    this._status = Transceiver.ES_UNCONNECTED;
+    this._stream = undefined;
+&nbsp;
+    if (this._socket) {
+        this._socket.removeListener("connect", this._socket_evt.connect);
+        this._socket.removeListener("error", this._socket_evt.error);
+        this._socket.removeListener("close", this._socket_evt.close);
+        this._socket.removeListener("data", this._socket_evt.data);
+        this._socket.destroy();
+        this._socket = undefined;
+    }
+&nbsp;
+    //原来的地址已经失效，现在清空，下次调用接口时重新获取
+    this._localEndpoint = undefined;
+};
+&nbsp;
+/////////////////////////////////////////////UDP协议套接口类////////////////////////////////////////////////////////////
+var UDPTransceiver = <span class="fstat-no" title="function not covered" >function ($adapter, $endpoint) {</span>
+<span class="cstat-no" title="statement not covered" >    this._adapter       = $adapter;</span>
+<span class="cstat-no" title="statement not covered" >    this._endpoint      = $endpoint;</span>
+<span class="cstat-no" title="statement not covered" >    this._stream        = undefined;</span>
+<span class="cstat-no" title="statement not covered" >    this._socket        = undefined;</span>
+<span class="cstat-no" title="statement not covered" >    this._status        = Transceiver.ES_UNCONNECTED;</span>
+<span class="cstat-no" title="statement not covered" >    this._localEndpoint = undefined;</span>
+};
+module.exports.UDPTransceiver = UDPTransceiver;
+&nbsp;
+UDPTransceiver.prototype.__defineGetter__("LocalEndpoint", <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >    if (this._localEndpoint === undefined &amp;&amp; this._socket &amp;&amp; this._status == Transceiver.ES_CONNECTED) {</span>
+<span class="cstat-no" title="statement not covered" >        try{</span>
+<span class="cstat-no" title="statement not covered" >            this._localEndpoint = new Endpoint();</span>
+<span class="cstat-no" title="statement not covered" >            this._localEndpoint.sProtocol = "udp";</span>
+<span class="cstat-no" title="statement not covered" >            this._localEndpoint.sHost     = this._socket.address().address;</span>
+<span class="cstat-no" title="statement not covered" >            this._localEndpoint.iPort     = this._socket.address().port;</span>
+        } catch(e){}
+    }
+<span class="cstat-no" title="statement not covered" >    return this._localEndpoint;</span>
+});
+&nbsp;
+//启动传输
+UDPTransceiver.prototype.reconnect = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    self._stream = new self._adapter._worker._protocol();</span>
+    //设置协议类型，feed的时候需要区分tars和tup编码
+<span class="cstat-no" title="statement not covered" >    self._stream._version = self._adapter._worker.version || 1;</span>
+<span class="cstat-no" title="statement not covered" >    self._socket = dgram.createSocket("udp4");</span>
+<span class="cstat-no" title="statement not covered" >    self._socket.on("message", <span class="fstat-no" title="function not covered" >function ($msg) {</span> <span class="cstat-no" title="statement not covered" >self._stream.reset(); <span class="cstat-no" title="statement not covered" ></span>self._stream.feed($msg); </span>   });</span>
+<span class="cstat-no" title="statement not covered" >    self._stream.on("message", <span class="fstat-no" title="function not covered" >function ($protoMessage) {</span> <span class="cstat-no" title="statement not covered" >self._adapter.doResponse($protoMessage); </span>});</span>
+<span class="cstat-no" title="statement not covered" >    self._status = Transceiver.ES_CONNECTED;</span>
+};
+&nbsp;
+UDPTransceiver.prototype.sendRequest = <span class="fstat-no" title="function not covered" >function ($protoMessage) {</span>
+<span class="cstat-no" title="statement not covered" >    var NodeBuffer = this._stream.compose($protoMessage);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._socket.send(NodeBuffer, 0, NodeBuffer.length, this._endpoint.iPort, this._endpoint.sHost);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return true;</span>
+};
+&nbsp;
+UDPTransceiver.prototype.hasConnected = <span class="fstat-no" title="function not covered" >function () {</span> <span class="cstat-no" title="statement not covered" >return this._status === Transceiver.ES_CONNECTED; </span> };
+UDPTransceiver.prototype.isConnecting = <span class="fstat-no" title="function not covered" >function () {</span> <span class="cstat-no" title="statement not covered" >return this._status === Transceiver.ES_CONNECTING; </span>};
+UDPTransceiver.prototype.isValid      = <span class="fstat-no" title="function not covered" >function () {</span> <span class="cstat-no" title="statement not covered" >return this._status !== Transceiver.ES_UNCONNECTED;}</span>;
+&nbsp;
+//关闭当前网络套接字
+UDPTransceiver.prototype.close = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >    this._status = Transceiver.ES_UNCONNECTED;</span>
+<span class="cstat-no" title="statement not covered" >    this._stream = undefined;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._socket.close();</span>
+&nbsp;
+    //原来的地址已经失效，现在清空，下次调用接口时重新获取
+<span class="cstat-no" title="statement not covered" >    this._localEndpoint = undefined;</span>
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 30 2020 12:15:32 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

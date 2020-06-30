@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for rpc/core/server/Transceiver.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">rpc/core/server/</a> Transceiver.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">70.97% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>44/62</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>2/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">41.18% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>7/17</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">72.13% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>44/61</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * 服务端网络传输层代理类
+ */
+///////////////////////////////////////////////TCP网络传输类////////////////////////////////////////////////////////////
+var TCPTransceiver = function () {
+    this.adapter     = undefined;
+    this.socket      = undefined;
+    this.stream      = undefined;
+    this.netthread   = undefined;
+    this.uid         = 0;
+    this._socket_evt = undefined;
+    this._iTimeout   = 60000;
+};
+module.exports.TCPTransceiver = TCPTransceiver;
+&nbsp;
+TCPTransceiver.prototype.initialize = function () {
+    var self = this;
+&nbsp;
+    self._socket_evt = {
+        close   : <span class="fstat-no" title="function not covered" >function()        {</span> <span class="cstat-no" title="statement not covered" >self.close(); </span>},
+        error   : <span class="fstat-no" title="function not covered" >function()        {</span> <span class="cstat-no" title="statement not covered" >self.close(); </span>},
+        timeout : <span class="fstat-no" title="function not covered" >function ()       {</span> <span class="cstat-no" title="statement not covered" >self.close(); </span>},
+        data    : function(data)    { self.stream.feed(data); },
+        message : function(request) { self.adapter.dispatch(self, request); }
+    };
+&nbsp;
+    self.socket.on("data",    self._socket_evt.data);
+    self.socket.on("error",   self._socket_evt.error);
+    self.socket.on("close",   self._socket_evt.close);
+    self.socket.on("timeout", self._socket_evt.timeout);
+    self.stream.on("error",   self._socket_evt.error);
+    self.stream.on("message", self._socket_evt.message);
+&nbsp;
+    self.socket.setTimeout(this._iTimeout);
+};
+&nbsp;
+TCPTransceiver.prototype.close = function () { //主动或者发生错误之后，关闭本连接
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (this.socket) {
+        try
+        {
+            this.netthread.remove(this.uid);
+&nbsp;
+            this.socket.removeListener("error",     this._socket_evt.error);
+            this.socket.removeListener("close",     this._socket_evt.close);
+            this.socket.removeListener("data",      this._socket_evt.data);
+            this.socket.removeListener("timeout",   this._socket_evt.timeout);
+            this.stream.removeListener("error",     this._socket_evt.error);
+            this.stream.removeListener("message",   this._socket_evt.message);
+            this.socket.destroy();
+&nbsp;
+            this.socket = undefined;
+        }catch(e){
+<span class="cstat-no" title="statement not covered" >            console.error('[TCPTransceiver.close] ' + e.message);</span>
+        }
+    }
+};
+&nbsp;
+TCPTransceiver.prototype.send = function ($protoMessage) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if(this.socket)
+        this.socket.write(this.stream.compose($protoMessage));
+};
+&nbsp;
+TCPTransceiver.prototype.setTimeout = function ($iTimeout) { //设置服务端连接空闲时间
+    this._iTimeout = $iTimeout;
+};
+&nbsp;
+///////////////////////////////////////////////UDP网络传输类////////////////////////////////////////////////////////////
+var UDPTransceiver = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >    this.adapter   = undefined;</span>
+<span class="cstat-no" title="statement not covered" >    this.socket    = undefined;</span>
+<span class="cstat-no" title="statement not covered" >    this.stream    = undefined;</span>
+<span class="cstat-no" title="statement not covered" >    this.endpoint  = undefined;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._iTimeout = 60000;</span>
+};
+module.exports.UDPTransceiver = UDPTransceiver;
+&nbsp;
+UDPTransceiver.prototype.doRequest = <span class="fstat-no" title="function not covered" >function ($msg) {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    self.stream.reset();</span>
+<span class="cstat-no" title="statement not covered" >    self.stream.on("error", <span class="fstat-no" title="function not covered" >function (){</span>});</span>
+<span class="cstat-no" title="statement not covered" >    self.stream.on("message", <span class="fstat-no" title="function not covered" >function (request) {</span> <span class="cstat-no" title="statement not covered" >self.adapter.dispatch(self, request); </span>});</span>
+<span class="cstat-no" title="statement not covered" >    self.stream.feed($msg);</span>
+};
+&nbsp;
+UDPTransceiver.prototype.send = <span class="fstat-no" title="function not covered" >function ($protoMessage) {</span>
+<span class="cstat-no" title="statement not covered" >    var NodeBuffer = this.stream.compose($protoMessage);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.socket.send(NodeBuffer, 0, NodeBuffer.length, this.endpoint.iPort, this.endpoint.sHost);</span>
+};
+&nbsp;
+UDPTransceiver.prototype.setTimeout = <span class="fstat-no" title="function not covered" >function ($iTimeout) {</span> //设置服务端连接空闲时间
+<span class="cstat-no" title="statement not covered" >    this._iTimeout = $iTimeout;</span>
+};
+&nbsp;
+UDPTransceiver.prototype.close = <span class="fstat-no" title="function not covered" >function () {</span>
+&nbsp;
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 30 2020 12:15:32 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

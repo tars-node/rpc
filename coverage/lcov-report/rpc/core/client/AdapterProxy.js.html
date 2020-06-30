@@ -1,0 +1,1358 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for rpc/core/client/AdapterProxy.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">rpc/core/client/</a> AdapterProxy.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">60.62% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>137/226</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">37.04% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>40/108</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">78.13% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>25/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">59.91% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>133/222</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-yes">24×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * tars框架的连接代理类类
+ */
+var assert         = require("assert");
+var TarsMonitor     = require("@tars/monitor");
+var TimeProvider   = require("@tars/utils").timeProvider;
+var TarsError       = require("../util/TarsError.js").TarsError;
+var RpcCallError   = require("../util/RpcCallError.js").RpcCallError;
+var TQueue         = require("../util/TQueue.js").TQueue;
+var TCPTransceiver = require("./Transceiver.js").TCPTransceiver;
+var UDPTransceiver = require("./Transceiver.js").UDPTransceiver;
+&nbsp;
+/**
+ * 超时一定比率后进行切换
+ * 设置超时检查参数
+ * 计算到某台服务器的超时率, 如果连续超时次数或者超时比例超过阀值
+ * 默认60s内, 超时调用次数&gt;=2, 超时比率0.5或者连续超时次数&gt;5,
+ * 则失效
+ * 服务失效后, 请求将尽可能的切换到其他可能的服务器, 并每隔tryTimeInterval尝试一次, 如果成功则认为恢复
+ * 如果其他服务器都失效, 则随机选择一台尝试
+ * 如果是灰度状态的服务, 服务失效后如果请求切换, 也只会转发到相同灰度状态的服务
+ * @uint16_t minTimeoutInvoke, 计算的最小的超时次数, 默认2次(在checkTimeoutInterval时间内超过了minTimeoutInvoke, 才计算超时)
+ * @uint32_t frequenceFailInvoke, 连续失败次数
+ * @uint32_t checkTimeoutInterval, 统计时间间隔, (默认60s, 不能小于30s)
+ * @float radio, 超时比例 &gt; 该值则认为超时了 ( 0.1&lt;=radio&lt;=1.0 )
+ * @uint32_t tryTimeInterval, 重试时间间隔
+ */
+&nbsp;
+//////////////////////////////////////////////定义接口代理类////////////////////////////////////////////////////////////
+var AdapterProxy = function () {
+    this._worker                = undefined;        //所属的ObjectProxy
+    this._endpoint              = undefined;        //服务端的IP地址以及端口
+    this._vTrans                = [];               //连接服务端的套接口列表
+    this._iTransIndex           = 0;                //当前使用的套接字接口索引
+&nbsp;
+    this._pTimeoutQueueY        = new TQueue();     //当前端口上的已发送调用队列
+    this._pTimeoutQueueN        = new TQueue();     //当前端口上的未发送调用队列
+&nbsp;
+    this._activeStatus          = true;             //当前端口上的可用状态
+    this._nextFinishInvokeTime  = 0;
+    this._nextReconnectTime     = 0;                //非活跃节点下次重连时间(对端连接卡在半连接或者无法正常处理请求时会触发)
+    this._nextRetryTime         = 0;
+    this._frequenceFailTime     = 0;
+    this._frequenceFailInvoke   = 0;
+    this._totalInvoke           = 0;
+    this._timeoutInvoke         = 0;
+};
+module.exports.AdapterProxy = AdapterProxy;
+&nbsp;
+// 设置接口代理类对外暴露的属性
+AdapterProxy.prototype.__defineGetter__("worker",   function () { return this._worker; });
+AdapterProxy.prototype.__defineSetter__("worker",   function (value) { this._worker = value;   });
+&nbsp;
+AdapterProxy.prototype.__defineGetter__("endpoint", function () { return this._endpoint; });
+AdapterProxy.prototype.__defineSetter__("endpoint", function (value) { this._endpoint = value; });
+&nbsp;
+AdapterProxy.prototype.pushTimeoutQueueN = <span class="fstat-no" title="function not covered" >function(reqMessage)</span>
+{
+<span class="cstat-no" title="statement not covered" >    this._pTimeoutQueueN.push(reqMessage.request.iRequestId, reqMessage);</span>
+};
+&nbsp;
+AdapterProxy.prototype.pushTimeoutQueueY = <span class="fstat-no" title="function not covered" >function(reqMessage)</span>
+{
+<span class="cstat-no" title="statement not covered" >    this._pTimeoutQueueY.push(reqMessage.request.iRequestId, reqMessage);</span>
+};
+&nbsp;
+// 初始化代理类，主要生成网络传输类的实例
+AdapterProxy.prototype.initialize = function () {
+    assert(this._endpoint.sProtocol === "tcp" || <span class="branch-1 cbranch-no" title="branch not covered" >this._endpoint.sProtocol === "udp",</span> "trans protocol must be tcp or udp");
+    for(var i=0; i&lt; this._worker._iTransPoolSize;i++){
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (this._endpoint.sProtocol === "tcp") {
+            this._vTrans[i] = new TCPTransceiver(this, this._endpoint);
+        } else {
+<span class="cstat-no" title="statement not covered" >            this._vTrans[i] = new UDPTransceiver(this, this._endpoint);</span>
+        }
+    }
+};
+&nbsp;
+AdapterProxy.prototype._getTrans = function () {
+    var vTrans = this._vTrans.slice(0), trans;
+    var hash;
+    do {
+        hash = ++this._iTransIndex % vTrans.length;
+        trans = vTrans[hash];
+        if(trans.hasConnected()) {
+            return trans;
+        }
+        vTrans.splice(hash, 1);
+    } while (vTrans.length &gt; 0);
+    return this._vTrans[this._iTransIndex % this._vTrans.length];
+}
+&nbsp;
+//将队列返还给ObjectProxy，并调用worker的doInvoke，以选择其他节点重新发送
+//如果不返还请求数据，请求量很大，干掉某个节点的时候，此节点中的请求可能会超时
+AdapterProxy.prototype._resetQueue=function(){
+    var self=this;
+    var worker=self.worker;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(self._worker._bRetryOnDestroy){
+<span class="cstat-no" title="statement not covered" >        self._pTimeoutQueueY.forEach(<span class="fstat-no" title="function not covered" >function (key) {</span></span>
+<span class="cstat-no" title="statement not covered" >            var reqMessage = self._pTimeoutQueueY.pop(key, true);</span>
+<span class="cstat-no" title="statement not covered" >            delete reqMessage.adapter;</span>
+<span class="cstat-no" title="statement not covered" >            delete reqMessage.RemoteEndpoint;</span>
+<span class="cstat-no" title="statement not covered" >            worker.pTimeoutQueue.push(reqMessage.request.iRequestId, reqMessage);</span>
+        });
+    }
+    self._pTimeoutQueueN.forEach(function (key) {
+        var reqMessage = self._pTimeoutQueueN.pop(key, true);
+        delete reqMessage.adapter;
+        delete reqMessage.RemoteEndpoint;
+        worker.pTimeoutQueue.push(reqMessage.request.iRequestId, reqMessage);
+    });
+    process.nextTick(function(){
+        worker.doInvoke();
+    });
+}
+&nbsp;
+// 销毁当前的连接代理类，在如下的时机：
+// 第一，该服务端被从主控去除之后
+// 第二，关闭当前的连接
+AdapterProxy.prototype.destroy = function () {
+    var self = this;
+    self._resetQueue();
+    //加上延时关闭逻辑，处理无损重启时仍然可以正常应答的调用
+    setTimeout(function () {
+        self._pTimeoutQueueY.clear();
+        self._vTrans.forEach(function (trans) {
+            trans.close();
+        })
+        self._vTrans.length=0;
+    }, self._worker.timeout)
+};
+&nbsp;
+//请求返回了，并且Transceiver获得了一个完整的请求，由Transceiver回调该接口
+AdapterProxy.prototype.doResponse = function ($rspMessage) {
+    var reqMessage = this._pTimeoutQueueY.pop($rspMessage.iRequestId, true);
+    //如果在当前已发送队列中没有发现该请求，有可能是因为超时被删除了,或者是单向请求压根没加入队列
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (reqMessage === undefined) {
+<span class="cstat-no" title="statement not covered" >        return ;</span>
+    }
+    reqMessage.clearTimeout();
+    reqMessage.adapter.finishInvoke($rspMessage.iResultCode, reqMessage);
+&nbsp;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if ($rspMessage.iResultCode === 0) {
+        reqMessage.promise.resolve({request:reqMessage, response:$rspMessage.origin});
+    } else {
+<span class="cstat-no" title="statement not covered" >        reqMessage.promise.reject (new RpcCallError({request:reqMessage, response:$rspMessage.origin, error:{code:$rspMessage.iResultCode, message:$rspMessage.sResultDesc}}));</span>
+    }
+};
+&nbsp;
+// 当在AdapterProxy内队列上的请求超时的时候，调用当前函数
+AdapterProxy.prototype.doTimeout = <span class="fstat-no" title="function not covered" >function ($reqMessage) {</span>
+    // 有可能在任一队列上，无论那种情况尝试删除即可
+<span class="cstat-no" title="statement not covered" >    this._pTimeoutQueueY.erase($reqMessage.request.iRequestId);</span>
+<span class="cstat-no" title="statement not covered" >    this._pTimeoutQueueN.erase($reqMessage.request.iRequestId);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $reqMessage.clearTimeout();</span>
+<span class="cstat-no" title="statement not covered" >    $reqMessage.adapter.finishInvoke(TarsError.CLIENT.REQUEST_TIMEOUT, $reqMessage);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $reqMessage.promise.reject(new RpcCallError({request:$reqMessage, response:undefined, error:{code:TarsError.CLIENT.REQUEST_TIMEOUT, message:"call remote server timeout(remote server no response)"}}));</span>
+};
+&nbsp;
+// 发送积压的数据
+// 当前代理类重新连接或者第一次连接上对端服务之后，回调该函数
+AdapterProxy.prototype.doInvoke = function () {
+    // 遍历未发送的请求
+    var self = this;
+    self._pTimeoutQueueN.forEach(function (key) {
+        var reqMessage = self._pTimeoutQueueN.pop(key, true);
+        var currentTrans = self._getTrans();
+        reqMessage.LocalEndpoint  = currentTrans.LocalEndpoint;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (currentTrans.sendRequest(reqMessage.request)) {
+            //单向请求不需要向请求成功队列里边加入数据，而是立即reject
+            if(reqMessage.request.property &amp;&amp; reqMessage.request.property.packetType === 1){
+                reqMessage.adapter._doOneWayEnd(reqMessage);
+            }
+            else{
+                self._pTimeoutQueueY.push(reqMessage.request.iRequestId, reqMessage);
+            }
+        } else {
+<span class="cstat-no" title="statement not covered" >            self._doInvokeException(reqMessage);</span>
+        }
+    });
+&nbsp;
+    // 看ObjectProxy上是否有数据需要发送
+    self._worker.doInvoke();
+};
+//单向请求发送成功后即调用此函数，避免请求数据长时间在_pTimeoutQueueY队列中直到超时，占用内存
+AdapterProxy.prototype._doOneWayEnd = function (reqMessage) {
+    reqMessage.clearTimeout();
+    //标记一下调用成功，避免触发节点失活策略
+    reqMessage.adapter.finishInvoke(0, reqMessage);
+    reqMessage.promise.reject(new RpcCallError({request:reqMessage, response:undefined, error:{code:reqMessage.iResultCode, message:"one way call do not need response"}}));
+}
+// 从当前积压队列中再次发送数据时失败，则不再尝试，直接作为异常处理
+AdapterProxy.prototype._doInvokeException = <span class="fstat-no" title="function not covered" >function ($reqMessage) {</span>
+<span class="cstat-no" title="statement not covered" >    $reqMessage.clearTimeout();</span>
+<span class="cstat-no" title="statement not covered" >    $reqMessage.adapter.finishInvoke(TarsError.CLIENT.ADAPTER_NOT_FOUND, $reqMessage);</span>
+<span class="cstat-no" title="statement not covered" >    $reqMessage.promise.reject(new RpcCallError({request:$reqMessage, response:undefined, error:{code:TarsError.CLIENT.ADAPTER_NOT_FOUND, message:"call remote server error(send again error)"}}));</span>
+};
+&nbsp;
+AdapterProxy.prototype.invoke = function ($reqMessage) {
+    $reqMessage.adapter = this;
+    $reqMessage.RemoteEndpoint = this._endpoint;
+    var currentTrans = this._getTrans();
+    if (currentTrans.sendRequest($reqMessage.request)) {
+        //第一次尝试时仅成功后设置LocalEndpoint，因为后续可能重新发送
+        $reqMessage.LocalEndpoint  = currentTrans.LocalEndpoint;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if($reqMessage.request.property &amp;&amp; $reqMessage.request.property.packetType === 1){
+            //单向请求不需要向请求成功队列里边加入数据
+<span class="cstat-no" title="statement not covered" >            $reqMessage.adapter._doOneWayEnd($reqMessage);</span>
+        }
+        else{
+            //如果非单向请求发送成功，则放入发送成功队列
+            this._pTimeoutQueueY.push($reqMessage.request.iRequestId, $reqMessage);
+        }
+    } else {
+        this._pTimeoutQueueN.push($reqMessage.request.iRequestId, $reqMessage); //如果发送失败，则放入发送失败队列，稍后尝试再次发送
+    }
+};
+&nbsp;
+// 设置当前代理类为无效
+AdapterProxy.prototype._setInactive = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >    this._activeStatus  = false;</span>
+<span class="cstat-no" title="statement not covered" >    this._nextRetryTime = TimeProvider.nowTimestamp() + this._worker._checkTimeoutInfo.tryTimeInterval;</span>
+<span class="cstat-no" title="statement not covered" >    this._vTrans.forEach(<span class="fstat-no" title="function not covered" >function (trans) {</span></span>
+<span class="cstat-no" title="statement not covered" >        trans.close();</span>
+    })
+};
+&nbsp;
+AdapterProxy.prototype._isPoolActive = function () {
+    return this._vTrans.every(function (trans) {
+        return trans.hasConnected() || trans.isConnecting()
+    });
+}
+&nbsp;
+AdapterProxy.prototype._poolReconnect = function () {
+    this._vTrans.forEach(function (trans) {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (!trans.isValid()) {
+            trans.reconnect();
+        }
+    })
+}
+&nbsp;
+// 判断当前的接口代理实例是否可用
+AdapterProxy.prototype.checkActive = function ($bForceConnect) {
+    if (this._isPoolActive()) {
+        return true;
+    }
+&nbsp;
+    var nowTime = TimeProvider.nowTimestamp();
+&nbsp;
+    //如果是需要强制连接
+    <span class="missing-if-branch" title="if path not taken" >I</span>if ($bForceConnect) {
+<span class="cstat-no" title="statement not covered" >        this._nextRetryTime = nowTime + this._worker._checkTimeoutInfo.tryTimeInterval;</span>
+<span class="cstat-no" title="statement not covered" >        this._poolReconnect();</span>
+<span class="cstat-no" title="statement not covered" >        return this._isPoolActive();</span>
+    }
+    //失效且没有到下次重试时间, 直接返回不可用
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!this._activeStatus &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >nowTime &lt; this._nextRetryTime)</span> {
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+    }
+&nbsp;
+    //如果还没有连接过，那么就重新连接
+    this._poolReconnect();
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!this._activeStatus) {
+<span class="cstat-no" title="statement not covered" >        this._nextRetryTime = nowTime + this._worker._checkTimeoutInfo.tryTimeInterval;</span>
+    }
+&nbsp;
+    //返回当前AdapterProxy是否可用
+    return this._isPoolActive();
+};
+&nbsp;
+//处理当前代理类有效性的检查等功能
+AdapterProxy.prototype._doFinishInvoke = function ($iResultCode) {
+    var nowTime = TimeProvider.nowTimestamp();
+&nbsp;
+    //处于异常状态
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this._activeStatus === false) {
+<span class="cstat-no" title="statement not covered" >        if ($iResultCode === 0) { //调用成功的情况下，重置统计数据</span>
+<span class="cstat-no" title="statement not covered" >            this._activeStatus          = true;</span>
+<span class="cstat-no" title="statement not covered" >            this._frequenceFailInvoke   = 0;</span>
+<span class="cstat-no" title="statement not covered" >            this._totalInvoke           = 1;</span>
+<span class="cstat-no" title="statement not covered" >            this._timeoutInvoke         = 0;</span>
+<span class="cstat-no" title="statement not covered" >            this._nextFinishInvokeTime  = nowTime + this._worker._checkTimeoutInfo.checkTimeoutInterval;</span>
+        } else {
+            //这里再次断开节点，尝试重连，处理连接一直没有真正断开的情况
+<span class="cstat-no" title="statement not covered" >            if (nowTime &gt; this._nextReconnectTime){</span>
+<span class="cstat-no" title="statement not covered" >                this._nextReconnectTime = nowTime + this._worker._checkTimeoutInfo.reconnectInterval;</span>
+<span class="cstat-no" title="statement not covered" >                this._setInactive();</span>
+            }
+<span class="cstat-no" title="statement not covered" >            console.info("[TARS][AdapterProxy::finishInvoke(bool), ", this._worker.name, ", " ,this._endpoint.toString(), ", retry fail]");</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return ;</span>
+    }
+&nbsp;
+    //处于正常状态
+    this._totalInvoke++;
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if ($iResultCode !== 0) { //调用失败
+<span class="cstat-no" title="statement not covered" >        this._timeoutInvoke++;</span>
+<span class="cstat-no" title="statement not covered" >        if (this._frequenceFailInvoke === 0) {</span>
+<span class="cstat-no" title="statement not covered" >            this._frequenceFailTime = nowTime + this._worker._checkTimeoutInfo.minFrequenceFailTime;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        this._frequenceFailInvoke++;</span>
+&nbsp;
+        //检查是否到了连续失败次数,且至少在5s以上
+<span class="cstat-no" title="statement not covered" >        if (this._frequenceFailInvoke &gt;= this._worker._checkTimeoutInfo.frequenceFailInvoke &amp;&amp; nowTime &gt;= this._frequenceFailTime) {</span>
+<span class="cstat-no" title="statement not covered" >            this._setInactive();</span>
+        }
+    } else { //调用成功
+        this._frequenceFailInvoke = 0;
+    }
+&nbsp;
+    //判断一段时间内的超时比例
+    if (nowTime &gt; this._nextFinishInvokeTime) {
+        this._nextFinishInvokeTime = nowTime + this._worker._checkTimeoutInfo.checkTimeoutInterval;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if ($iResultCode !== 0 &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >this._timeoutInvoke &gt;= this._worker._checkTimeoutInfo.minTimeoutInvoke </span>&amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >this._timeoutInvoke &gt;= parseInt(this._worker._checkTimeoutInfo.radio * this._totalInvoke))</span> {
+<span class="cstat-no" title="statement not covered" >            this._setInactive();</span>
+        } else {
+            this._totalInvoke   = 0;
+            this._timeoutInvoke = 0;
+        }
+    }
+};
+&nbsp;
+AdapterProxy.prototype.finishInvoke = function ($iResultCode, $reqMessage) {
+    $reqMessage = $reqMessage || <span class="branch-1 cbranch-no" title="branch not covered" >{};</span>
+    //若在node-agent中运行时，若设置了调用完毕消息同步，将调用完成的消息在各工作进程间同步
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(this._worker._bSyncInvokeFinish){
+<span class="cstat-no" title="statement not covered" >        process.send({</span>
+            cmd         : "process.msg:all",
+            event       : "finishInvoke",
+            objname     : this._worker._objname,
+            setname     : this._worker._setname,
+            endpoint    : this._endpoint,
+            iResultCode : $iResultCode
+        });
+    }
+    else{
+        this._doFinishInvoke($iResultCode);
+    }
+    var packetType = 0;
+    if($reqMessage.request.property &amp;&amp; $reqMessage.request.property.packetType === 1)
+        packetType = 1;
+&nbsp;
+    //如果是在正式环境，则上报统计信息(单向调用不需要上报)
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (process.env.TARS_MONITOR &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >packetType !== 1 </span>&amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >$reqMessage.worker.version == 1)</span> {
+        //正式环境需要上报统计数据
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var masterSetInfo = '', masterModuleName = '';</span>
+<span class="cstat-no" title="statement not covered" >        var arr = [], slaveSetName = '', slaveSetArea = '', slaveSetID = '', servantArr;</span>
+<span class="cstat-no" title="statement not covered" >        var communicator = this._worker._comm;</span>
+<span class="cstat-no" title="statement not covered" >        var masterConfig = communicator.configure;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        masterModuleName = masterConfig.get("tars.application.client.modulename", '');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var enableSet = masterConfig.get("tars.application.enableset", 'n');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if(enableSet == 'y' || enableSet == 'Y')</span>
+        {
+<span class="cstat-no" title="statement not covered" >            var setDivision = masterConfig.get("tars.application.setdivision", undefined);</span>
+<span class="cstat-no" title="statement not covered" >            if(setDivision)</span>
+            {
+<span class="cstat-no" title="statement not covered" >                masterSetInfo = setDivision;</span>
+<span class="cstat-no" title="statement not covered" >                arr = setDivision.split(".");</span>
+<span class="cstat-no" title="statement not covered" >                masterModuleName += '.' + arr.join('');</span>
+            }
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var servantName = $reqMessage.request.sServantName;</span>
+<span class="cstat-no" title="statement not covered" >        arr = servantName.split('.');</span>
+<span class="cstat-no" title="statement not covered" >        arr = arr.slice(0, 2);</span>
+<span class="cstat-no" title="statement not covered" >        servantName = arr.join('.');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var setId       = $reqMessage.request.setId;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var headers = {</span>
+            masterName    : masterModuleName,
+            slaveName     : servantName,
+            interfaceName : $reqMessage.request.sFuncName,
+            masterIp      : this._worker.communicator.ClientConfig.LocalIp,
+            slaveIp       : this._endpoint.sHost,
+            slavePort     : this._endpoint.iPort,
+            bFromClient   : true
+        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if(setId)</span>
+        {
+<span class="cstat-no" title="statement not covered" >            servantArr = servantName.split('.');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            arr = setId.split(".");</span>
+<span class="cstat-no" title="statement not covered" >            if(arr &amp;&amp; arr.length &gt;= 3)</span>
+            {
+<span class="cstat-no" title="statement not covered" >                slaveSetName         = arr[0];</span>
+<span class="cstat-no" title="statement not covered" >                slaveSetArea         = arr[1];</span>
+<span class="cstat-no" title="statement not covered" >                slaveSetID           = arr[2];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                headers.slaveName    = servantArr[0] + '.'+ servantArr[1] + '.' + arr.join('');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                headers.slaveSetName = slaveSetName;</span>
+<span class="cstat-no" title="statement not covered" >                headers.slaveSetArea = slaveSetArea;</span>
+<span class="cstat-no" title="statement not covered" >                headers.slaveSetID   = slaveSetID;</span>
+            }
+        }
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if(masterSetInfo)</span>
+<span class="cstat-no" title="statement not covered" >            headers.masterSetInfo = masterSetInfo;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if(!($reqMessage.costtime &gt;= 0) || !isFinite($reqMessage.costtime))</span>
+        {
+<span class="cstat-no" title="statement not covered" >            $reqMessage.costtime = 0;</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if ($iResultCode === 0 &amp;&amp; $reqMessage === undefined) {</span>
+<span class="cstat-no" title="statement not covered" >            TarsMonitor.stat.report(headers, TarsMonitor.stat.TYPE.SUCCESS, 0);</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if ($iResultCode === 0 &amp;&amp; $reqMessage !== undefined) {</span>
+<span class="cstat-no" title="statement not covered" >            TarsMonitor.stat.report(headers, TarsMonitor.stat.TYPE.SUCCESS, $reqMessage.costtime);</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if ($iResultCode !== 0 &amp;&amp; $reqMessage === undefined) {</span>
+<span class="cstat-no" title="statement not covered" >            TarsMonitor.stat.report(headers, TarsMonitor.stat.TYPE.ERROR, 0);</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if ($iResultCode !== 0 &amp;&amp; $reqMessage !== undefined) {</span>
+<span class="cstat-no" title="statement not covered" >            TarsMonitor.stat.report(headers, $iResultCode === TarsError.CLIENT.REQUEST_TIMEOUT?TarsMonitor.stat.TYPE.TIMEOUT:TarsMonitor.stat.TYPE.ERROR, $reqMessage.costtime);</span>
+        }
+    }
+};</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 30 2020 12:15:32 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

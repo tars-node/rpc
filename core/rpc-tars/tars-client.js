@@ -12,6 +12,7 @@ var stream = function () {
     this._name      = "tars";
     this._data = [];
     this._bufferLength = 0;
+    this._version = 1;
 }
 util.inherits(stream, EventEmitter);
 
@@ -28,16 +29,20 @@ module.exports = stream;
  */
 stream.prototype.compose = function ($protoMessage) {
     var option = {};
-    var packetType = 0;
+    var packetType = 0, iVersion = 1;;
     if($protoMessage && $protoMessage.property)
     {
         option = $protoMessage.property;
-        if(option && option.packetType && option.packetType === 1)
+        if(option && option.packetType && option.packetType === 1){
             packetType = 1;
+        }
+        if(option.iVersion && (option.iVersion === TarsStream.Tup.TUP_SIMPLE || option.iVersion === TarsStream.Tup.TUP_COMPLEX)){
+            iVersion = option.iVersion;
+        }
     }
 
     var req = new TarsPacket.RequestPacket();
-    req.iVersion        = 1;
+    req.iVersion        = iVersion;
     req.cPacketType     = packetType;
     req.iMessageType    = 0;
     req.iTimeout        = $protoMessage.iTimeout || 0;
@@ -93,10 +98,26 @@ stream.prototype.feed = function (data) {
 
                 var is      = new TarsStream.TarsInputStream(new TarsStream.BinBuffer(BinBuffer.slice(pos + 4, pos + Length)));
                 var message = new ProtoMessageResponse();
-                message.origin      = TarsPacket.ResponsePacket._readFrom(is);
-                message.iRequestId  = message.origin.iRequestId;
-                message.iResultCode = message.origin.iRet;
-                message.sResultDesc = message.origin.sResultDesc;
+                if(this._version === TarsStream.Tup.TUP_SIMPLE || this._version === TarsStream.Tup.TUP_COMPLEX){
+                    message.origin      = TarsPacket.RequestPacket._readFrom(is);
+                    message.iRequestId  = message.origin.iRequestId;
+                    var tup = new TarsStream.UniAttribute();
+                    tup.tupVersion = message.origin.iVersion;
+                    tup.decode(message.origin.sBuffer);
+
+                    var iResultCode = message.origin.status.get("STATUS_RESULT_CODE");
+                    iResultCode = iResultCode === undefined ? 0 : parseInt(iResultCode);
+                    message.iResultCode = iResultCode;
+                    message.origin.tup = tup;
+                    message.origin.iRet = iResultCode;
+                    message.origin.sBuffer = undefined;
+                } else {
+                    message.origin      = TarsPacket.ResponsePacket._readFrom(is);
+                    message.iRequestId  = message.origin.iRequestId;
+                    message.iResultCode = message.origin.iRet;
+                    message.sResultDesc = message.origin.sResultDesc;
+                }
+                
 
                 this.emit("message", message);
                 pos += Length;

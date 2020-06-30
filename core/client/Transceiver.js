@@ -43,6 +43,8 @@ TCPTransceiver.prototype.reconnect = function () {
     var self = this;
 
     self._stream = new self._adapter._worker._protocol();
+    //设置协议类型，feed的时候需要区分tars和tup编码
+    self._stream._version = self._adapter._worker.version || 1;
     self._socket = new net.Socket();
     self._status = Transceiver.ES_CONNECTING;
     self._socket.connect(self._endpoint.iPort, self._endpoint.sHost);
@@ -125,6 +127,8 @@ UDPTransceiver.prototype.reconnect = function () {
     var self = this;
 
     self._stream = new self._adapter._worker._protocol();
+    //设置协议类型，feed的时候需要区分tars和tup编码
+    self._stream._version = self._adapter._worker.version || 1;
     self._socket = dgram.createSocket("udp4");
     self._socket.on("message", function ($msg) { self._stream.reset(); self._stream.feed($msg);    });
     self._stream.on("message", function ($protoMessage) { self._adapter.doResponse($protoMessage); });

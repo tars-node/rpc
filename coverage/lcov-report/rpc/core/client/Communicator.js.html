@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for rpc/core/client/Communicator.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">rpc/core/client/</a> Communicator.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">62.04% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>67/108</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">40.82% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>20/49</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">68.42% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>13/19</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">61.17% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>63/103</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * tars框架的客户端通信器实现类
+ */
+var assert      = require("assert");
+var events      = require('events');
+var TarsMonitor  = require("@tars/monitor");
+var Configure   = require("@tars/utils").Config;
+var ObjectProxy = require("./ObjectProxy.js").ObjectProxy;
+&nbsp;
+//定义通信器
+var Communicator = function () {
+    this._property      = {}; //通信器的配置项
+    this._workers       = {}; //ObjectProxy的映射表
+    this._configure     = undefined;
+    this._initialized   = false;
+    this._masterName    = "";
+};
+module.exports.Communicator = Communicator;
+&nbsp;
+Communicator.prototype.__defineGetter__("configure", function () { return this._configure; });
+&nbsp;
+Communicator.prototype.__defineGetter__("masterName", <span class="fstat-no" title="function not covered" >function () {</span> <span class="cstat-no" title="statement not covered" >return this._masterName; </span>});
+&nbsp;
+//全局函数，用于创建一个通信器
+Communicator.New = function () {
+    return new Communicator();
+};
+&nbsp;
+//通信器全局属性
+Communicator.prototype.ClientConfig = {
+    SetOpen     : false,
+    SetDivision : "NULL",
+    ModuleName  : "NO_MODULE_NAME",
+    LocalIp     : ""
+};
+&nbsp;
+//设置通信器的属性值
+Communicator.prototype.setProperty = function ($key, $value) { this._property[$key] = $value; this._initProperty();     };
+Communicator.prototype.getProperty = function ($key, $value) { return this._property[$key]?this._property[$key]:$value; };
+&nbsp;
+//使用配置文件初始化通信器
+Communicator.prototype.initialize  = function ($sFilePath) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (this._initialized || ($sFilePath === undefined &amp;&amp; process.env.TARS_CONFIG === undefined)) { //如果已经初始化过，或者配置文件路径为空，则直接返回
+        return ;
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.bindUpdateLocatorEvent();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this._initialized = true;</span>
+&nbsp;
+    //读取配置文件，设置属性
+<span class="cstat-no" title="statement not covered" >    this._configure = new Configure();</span>
+<span class="cstat-no" title="statement not covered" >    this._configure.parseFile($sFilePath || process.env.TARS_CONFIG);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    TarsMonitor.stat.init(this._configure.json);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.ClientConfig.ModuleName  = this._configure.get("tars.application.client.modulename", "NO_MODULE_NAME");</span>
+<span class="cstat-no" title="statement not covered" >    this.ClientConfig.LocalIp     = this._configure.get("tars.application.server.localip", "");</span>
+<span class="cstat-no" title="statement not covered" >    this._masterName              = this.ClientConfig.ModuleName;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.getProperty("locator") || this.setProperty("locator",     this._configure.get("tars.application.client.locator", undefined)); </span>           //设置主控地址
+<span class="cstat-no" title="statement not covered" >    this.getProperty("timeout") || this.setProperty("timeout",     this._configure.get("tars.application.client.async-invoke-timeout", 30000)); </span>  //设置请求调用超时时间，默认为30s
+<span class="cstat-no" title="statement not covered" >    this.getProperty("setdivision") || this.setProperty("setdivision", this._configure.get("tars.application.setdivision", "NULL"));</span>
+<span class="cstat-no" title="statement not covered" >    this.getProperty("enableset") || this.setProperty("enableset",   this._configure.get("tars.application.enableset", "n"));</span>
+};
+&nbsp;
+//生成代理类接口
+Communicator.prototype.stringToProxy = function ($ProxyHandle, $objName, $SetName, options) {
+    options = options || {};
+    this.initialize();
+&nbsp;
+    //先检查设置的objName是否格式正确
+    assert($objName != undefined, "please specify the parameter value for objName");
+    assert($objName.indexOf("@") != -1 || $objName.indexOf("@") == -1 &amp;&amp; this.getProperty("locator") != undefined, "please specify the parameter value for registry locator");
+&nbsp;
+    $objName = $objName.replace(/^[\s\t ]+|[\s\t ]+$/g, '');
+    $objName = $objName.replace(/\s{2,}/g, ' ');
+&nbsp;
+    //创建代理类
+    var proxy = new $ProxyHandle();
+    proxy._name   = $objName;
+    proxy._worker = this._createObjectProxy($objName, $SetName?$SetName:"", options); //生成底层使用的ObjectProxy类实例
+    proxy._rpc    = this._createRPC(proxy);                                  //当用在第三方协议的似乎，用来生成函数以及调用对应函数
+&nbsp;
+    return proxy;
+};
+&nbsp;
+//析构当前的通信器
+Communicator.prototype.destroy = function () {
+    for (var key in this._workers) {
+        this._workers[key].destroy();
+&nbsp;
+        delete this._workers[key];
+    }
+};
+&nbsp;
+Communicator.prototype.disconnect = <span class="fstat-no" title="function not covered" >function () {</span> //兼容老版本的接口
+<span class="cstat-no" title="statement not covered" >    this.destroy();</span>
+};
+&nbsp;
+//检查是否开起SET模型
+Communicator.prototype._initProperty = function () {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this.getProperty("enableset", "n") === "y" || this.getProperty("enableset", "n") === "Y") {
+<span class="cstat-no" title="statement not covered" >        this.ClientConfig.SetOpen     = true;</span>
+<span class="cstat-no" title="statement not covered" >        this.ClientConfig.SetDivision = this.getProperty("setdivision", "NULL");</span>
+&nbsp;
+        // 检查SET格式是否正确
+<span class="cstat-no" title="statement not covered" >        var setDivision = this.ClientConfig.SetDivision.split(".");</span>
+<span class="cstat-no" title="statement not covered" >        if (setDivision.length != 3 || setDivision[0] === "*" || setDivision[1] === "*") {</span>
+<span class="cstat-no" title="statement not covered" >            this.ClientConfig.SetOpen     = false;</span>
+<span class="cstat-no" title="statement not covered" >            this.ClientConfig.SetDivision = "NULL";</span>
+<span class="cstat-no" title="statement not covered" >            this.setProperty("enableset", "n");</span>
+        }
+&nbsp;
+        // 设置上报使用的MasterName
+<span class="cstat-no" title="statement not covered" >        if (this.ClientConfig.SetOpen) {</span>
+<span class="cstat-no" title="statement not covered" >            var masterName   = this.ClientConfig.ModuleName;</span>
+<span class="cstat-no" title="statement not covered" >            var setDivision  = this.ClientConfig.SetDivision.split(".");</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (masterName.indexOf(".") !== -1) {</span>
+<span class="cstat-no" title="statement not covered" >                masterName   = masterName.slice(masterName.indexOf('.') + 1);</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            this._masterName = setDivision[0] + setDivision[1] + setDivision[2] + "." + masterName;</span>
+        }
+    }
+};
+&nbsp;
+//生成ObjectProxy类实例
+Communicator.prototype._createObjectProxy = function ($ObjectName, $SetName, options) {
+    var tmpObjName = $ObjectName + ":" + ($SetName === undefined?<span class="branch-0 cbranch-no" title="branch not covered" >"":</span>$SetName);
+    if (this._workers.hasOwnProperty(tmpObjName)) {
+        return this._workers[tmpObjName];
+    }
+&nbsp;
+    var worker = new ObjectProxy();
+    worker.communicator = this;
+    var timeout = this.getProperty("timeout"); //为ObjectProxy设置一个请求超时时间
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(timeout)
+    {
+<span class="cstat-no" title="statement not covered" >        worker.timeout      = timeout;</span>
+    }
+    worker.initialize($ObjectName, $SetName, options);
+&nbsp;
+    this._workers[tmpObjName] = worker;
+&nbsp;
+    return worker;
+};
+&nbsp;
+//创建RPC调用的句柄
+Communicator.prototype._createRPC = function (Handle) {
+    return {
+        createFunc : function (FuncName) {
+            this[FuncName] = function () {
+                var argsLen = arguments.length;
+                var args = new Array(argsLen);
+                for (var i = 0; i &lt; argsLen; i += 1) {
+                    args[i] = arguments[i];
+                }
+                
+                return Handle.rpc_call.apply(Handle, Array.prototype.concat.apply([Handle._worker.genRequestId(), FuncName], args));
+            }
+&nbsp;
+            return this[FuncName];
+        }
+    };
+};
+&nbsp;
+// 更新locator
+Communicator.prototype.bindUpdateLocatorEvent = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >    var self = this;</span>
+<span class="fstat-no" title="function not covered" >    function updateLocator()</span>
+    {
+<span class="cstat-no" title="statement not covered" >        var config = new Configure();</span>
+<span class="cstat-no" title="statement not covered" >        config.parseFile(process.env.TARS_CONFIG);</span>
+<span class="cstat-no" title="statement not covered" >        var locator = config.get("tars.application.client.locator", undefined);</span>
+<span class="cstat-no" title="statement not covered" >        self.setProperty("locator", locator);</span>
+    }
+&nbsp;
+    // 突破process.on的限制
+<span class="cstat-no" title="statement not covered" >    if(!global._tarsRpcEvents)</span>
+    {
+<span class="cstat-no" title="statement not covered" >        global._tarsRpcEvents = new events.EventEmitter();</span>
+<span class="cstat-no" title="statement not covered" >        global._tarsRpcEvents.setMaxListeners(0);</span>
+<span class="cstat-no" title="statement not covered" >        process.on('message', <span class="fstat-no" title="function not covered" >function(message) {</span></span>
+<span class="cstat-no" title="statement not covered" >            global._tarsRpcEvents.emit('message', message);</span>
+        });
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    global._tarsRpcEvents.on('message', <span class="fstat-no" title="function not covered" >function(message){</span></span>
+<span class="cstat-no" title="statement not covered" >        if (message &amp;&amp; message.cmd === 'tars.loadproperty') {</span>
+<span class="cstat-no" title="statement not covered" >            updateLocator();</span>
+        }
+    });
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 30 2020 12:15:32 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

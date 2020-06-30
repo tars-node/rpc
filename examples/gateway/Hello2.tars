@@ -1,0 +1,19 @@
+module Hello
+{
+	struct AddReq {
+		0 require int iNum1;
+		1 require int  iNum2;
+		2 require string sMsg = "a  {} () <> bc";
+	};
+
+	struct AddRsp {
+		0 require int iRet;
+		1 require int iResult;
+		2 require string sMsg;
+	};
+
+	interface Test
+	{
+		int add(AddReq stReq, out AddRsp stRsp);
+	};
+}; 

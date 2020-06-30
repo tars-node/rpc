@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for rpc/core/rpc-tars/tars-client.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">rpc/core/rpc-tars/</a> tars-client.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">87.37% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>83/95</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">73.47% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>36/49</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">66.67% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>4/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">88.3% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>83/94</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * 使用tars编码数据格式作为RPC协议的客户端协议解析器
+ */
+var EventEmitter = require("events").EventEmitter;
+var util         = require("util");
+var TarsStream          = require("@tars/stream");
+var TarsPacket    = require("./RequestF.js").tars;
+var CreateNodeBuffer = require("./CreateNodeBuffer");
+&nbsp;
+var stream = function () {
+    EventEmitter.call(this);
+    this._name      = "tars";
+    this._data = [];
+    this._bufferLength = 0;
+    this._version = 1;
+}
+util.inherits(stream, EventEmitter);
+&nbsp;
+stream.prototype.__defineGetter__("name", <span class="fstat-no" title="function not covered" >function () {</span> <span class="cstat-no" title="statement not covered" >return this._name; </span>});
+&nbsp;
+module.exports = stream;
+&nbsp;
+/**
+ * 根据传入数据进行打包的方法
+ * @param request
+ * request.iRequestId : 框架生成的请求序列号
+ * request.sFuncName  : 函数名称
+ * request.sBuffer    : 函数传入的打包数据
+ */
+stream.prototype.compose = function ($protoMessage) {
+    var option = {};
+    var packetType = 0, iVersion = 1;;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if($protoMessage &amp;&amp; $protoMessage.property)
+    {
+        option = $protoMessage.property;
+        if(option &amp;&amp; option.packetType &amp;&amp; option.packetType === 1){
+            packetType = 1;
+        }
+        if(option.iVersion &amp;&amp; (option.iVersion === TarsStream.Tup.TUP_SIMPLE || option.iVersion === TarsStream.Tup.TUP_COMPLEX)){
+            iVersion = option.iVersion;
+        }
+    }
+&nbsp;
+    var req = new TarsPacket.RequestPacket();
+    req.iVersion        = iVersion;
+    req.cPacketType     = packetType;
+    req.iMessageType    = 0;
+    req.iTimeout        = $protoMessage.iTimeout || <span class="branch-1 cbranch-no" title="branch not covered" >0;</span>
+    req.iRequestId      = $protoMessage.iRequestId;
+    req.sServantName    = $protoMessage.sServantName;
+    req.sFuncName       = $protoMessage.sFuncName;
+    req.sBuffer         = $protoMessage.appBuffer;
+&nbsp;
+    //设置染色以及context等属性
+    <span class="missing-if-branch" title="if path not taken" >I</span>if ($protoMessage.property &amp;&amp; $protoMessage.property.dyeing &amp;&amp; <span class="branch-2 cbranch-no" title="branch not covered" >$protoMessage.property.dyeing.dyeing)</span> {
+<span class="cstat-no" title="statement not covered" >        req.iMessageType = req.iMessageType | 0x04;</span>
+<span class="cstat-no" title="statement not covered" >        req.status.insert("STATUS_DYED_KEY", ($protoMessage.property.dyeing.key || '').toString());</span>
+    }
+    if ($protoMessage.property &amp;&amp; $protoMessage.property.context) {
+        for (var key in $protoMessage.property.context) {
+            req.context.insert(key, ($protoMessage.property.context[key] || <span class="branch-1 cbranch-no" title="branch not covered" >'')</span>.toString());
+        }
+    }
+&nbsp;
+    //对请求结构体打包
+    var os = new TarsStream.TarsOutputStream();
+    os.setHeaderLength(0);
+    req._writeTo(os);
+    os.setHeaderLength(os.getBinBuffer().length);
+&nbsp;
+    return os.getBinBuffer().toNodeBuffer();
+}
+&nbsp;
+/**
+ * 网络收取包之后，填入数据判断是否完整包
+ */
+var ProtoMessageResponse = function () {
+    this.origin       = undefined;   //原始的请求结构体,从协议中解出来的第一层结构体
+    this.iRequestId   = 0;
+    this.iResultCode  = 0;           //tars框架的错误代码
+    this.sResultDesc  = "";          //tars框架的错误消息
+}
+&nbsp;
+stream.prototype.feed = function (data) {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this._bufferLength &lt; 4 &amp;&amp; this._data.length &gt; 0) {
+<span class="cstat-no" title="statement not covered" >        this._data[0] = Buffer.concat([this._data[0], data]);</span>
+    } else {
+        this._data.push(data);
+    }
+    this._bufferLength += data.length;
+&nbsp;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (this._bufferLength &gt; 4) {
+        var Length = this._data[0].readUInt32BE(0);
+        //确保了一个完整的tars数据包
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (Length &lt;= this._bufferLength) {
+            var BinBuffer = Buffer.concat(this._data, this._bufferLength)
+            for (var pos = 0; pos &lt; BinBuffer.length; ) {
+&nbsp;
+                var is      = new TarsStream.TarsInputStream(new TarsStream.BinBuffer(BinBuffer.slice(pos + 4, pos + Length)));
+                var message = new ProtoMessageResponse();
+                if(this._version === TarsStream.Tup.TUP_SIMPLE || this._version === TarsStream.Tup.TUP_COMPLEX){
+                    message.origin      = TarsPacket.RequestPacket._readFrom(is);
+                    message.iRequestId  = message.origin.iRequestId;
+                    var tup = new TarsStream.UniAttribute();
+                    tup.tupVersion = message.origin.iVersion;
+                    tup.decode(message.origin.sBuffer);
+&nbsp;
+                    var iResultCode = message.origin.status.get("STATUS_RESULT_CODE");
+                    iResultCode = iResultCode === undefined ? <span class="branch-0 cbranch-no" title="branch not covered" >0 </span>: parseInt(iResultCode);
+                    message.iResultCode = iResultCode;
+                    message.origin.tup = tup;
+                    message.origin.iRet = iResultCode;
+                    message.origin.sBuffer = undefined;
+                } else {
+                    message.origin      = TarsPacket.ResponsePacket._readFrom(is);
+                    message.iRequestId  = message.origin.iRequestId;
+                    message.iResultCode = message.origin.iRet;
+                    message.sResultDesc = message.origin.sResultDesc;
+                }
+                
+&nbsp;
+                this.emit("message", message);
+                pos += Length;
+&nbsp;
+                //开始尝试第二个tars数据包的读取
+                if (BinBuffer.length - pos &lt; 4) {
+                    break;
+                }
+                Length = BinBuffer.readUInt32BE(pos);
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (pos + Length &gt; BinBuffer.length) {
+<span class="cstat-no" title="statement not covered" >                    break;</span>
+                }
+            }
+&nbsp;
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (pos != BinBuffer.length) {
+<span class="cstat-no" title="statement not covered" >                var tmp = CreateNodeBuffer(BinBuffer.length - pos);</span>
+<span class="cstat-no" title="statement not covered" >                BinBuffer.copy(tmp, 0, pos);</span>
+<span class="cstat-no" title="statement not covered" >                this._data = [tmp];</span>
+<span class="cstat-no" title="statement not covered" >                this._bufferLength = tmp.length;</span>
+            } else {
+                this._data = [];
+                this._bufferLength = 0;
+            }
+        }
+    }
+}
+&nbsp;
+stream.prototype.reset = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >    delete this._data;</span>
+<span class="cstat-no" title="statement not covered" >    this._data = [];</span>
+<span class="cstat-no" title="statement not covered" >    this._bufferLength = 0;</span>
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 30 2020 12:15:32 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

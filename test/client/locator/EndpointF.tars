@@ -1,0 +1,30 @@
+
+module tars
+{
+    struct EndpointF
+    {
+        0 require string host;
+        1 require int port;
+        2 require int timeout;
+        3 require int istcp;
+        4 require int grid;
+        5 optional int groupworkid;
+        6 optional int grouprealid;
+		7 optional string setId;
+		8 optional int qos;
+		9 optional int bakFlag;
+		10 optional int gridFlag;
+		11 optional int weight;
+		12 optional int weightType;
+		13 optional int cpuload;
+		14 optional long sampletime;
+		15 optional string containerName;
+		16 optional int grayFlag;
+		17 optional int benchmarkType;
+		// 18 optional string podid;
+		19 optional int authType;
+    };
+    key[EndpointF, host, port, timeout, istcp, grid, qos, gridFlag, weight, weightType];
+};
+
+

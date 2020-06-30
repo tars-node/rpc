@@ -1,0 +1,1019 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for rpc/core/client/EndpointManager.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">rpc/core/client/</a> EndpointManager.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">76.14% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>150/197</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">65.31% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>64/98</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">92.86% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>13/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">76.68% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>148/193</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var Registry     = require("@tars/registry");
+var Endpoint     = require("@tars/utils").Endpoint;
+var TimeProvider = require("@tars/utils").timeProvider;
+var AdapterProxy = require("./AdapterProxy.js").AdapterProxy;
+var HashRing     = require("hashring");
+&nbsp;
+/////////////////////////////////////////////主控地址管理类/////////////////////////////////////////////////////////////
+var EndpointManager = function ($RefObjectProxy, $RefCommunicator, $ObjectName, $SetName, options) {
+    options = options || <span class="branch-1 cbranch-no" title="branch not covered" >{};</span>
+    this._registry=Registry.New();
+    this._objname   = $ObjectName;      //分离之后ServantName的名字
+    this._setname   = $SetName;         //SET的名称
+    this._worker    = $RefObjectProxy;  //ObjectProxy引用
+    this._comm      = $RefCommunicator; //通信器引用
+    this._adapters  = [];               //当前服务下所有的通信代理类
+    this._hash      = 0;                //Hash值
+    this._iVnodeNumber = 100;             //一致性哈希，虚拟节点个数
+    this._hashRing  = undefined;        //一致性hashring
+    this._direct    = false;            //是否是直连服务，否则需要走主控查询可用地址+端口
+    this._bRequest  = false;            //是否正在请求中
+&nbsp;
+    this._iRefreshTime          = 0;       //IPList的刷新时间
+    this._iRefreshInterval      = 60000;   //请求列表的频率，单位毫秒
+    this._iActiveEmptyInterval  = 10000;   //请求回来活跃列表为空的间隔时间，单位毫秒
+    this._iRequestTimeout       = 0;       //请求的超时时间(绝对时间) 防止请求回调丢了。一直在正在请求状态
+    this._iWaitTime             = 5000;    //请求主控的等待时间，单位毫秒
+    this._loacator              = undefined; // 主控
+&nbsp;
+    //创建一致性hashring，若要指定虚拟节点个数，可通过这种方式启动hashring功能
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(options.bEnableConsistentHash){
+<span class="cstat-no" title="statement not covered" >        this._hashRing = new HashRing();</span>
+<span class="cstat-no" title="statement not covered" >        if(typeof options.vnodeNumber == "number") <span class="cstat-no" title="statement not covered" >this._iVnodeNumber = options.vnodeNumber;</span></span>
+    }
+&nbsp;
+    this._initialize($ObjectName);
+};
+module.exports.EndpointManager = EndpointManager;
+&nbsp;
+//解析服务端名称，发现是否是直连端口
+EndpointManager.prototype._initialize = function ($ObjectProxyName) {
+    var options = $ObjectProxyName.split('@');
+    if (options.length != 2) {
+        return;
+    }
+&nbsp;
+    this._objname = options[0];
+    this._direct  = true;
+    var endpoints = options[1].split(":");
+    for (var i = 0; i &lt; endpoints.length; i++) {
+        this._addEndpoint(Endpoint.parse(endpoints[i]));
+    }
+};
+&nbsp;
+EndpointManager.prototype.getAllAdapters = function()
+{
+    return this._adapters || <span class="branch-1 cbranch-no" title="branch not covered" >[];</span>
+};
+&nbsp;
+EndpointManager.prototype._initHashRing = function()
+{
+    this._hashRing = new HashRing();
+    var hasKey, hash;
+    for(var i=0; i&lt; this._adapters.length; i++){
+        var endpoint = this._adapters[i].endpoint;
+        hasKey = endpoint.sHost + ":" + endpoint.iPort;
+        hash = {};
+        hash[hasKey] = {vnode: this._iVnodeNumber};
+        this._hashRing.add(hash);
+    }
+};
+&nbsp;
+EndpointManager.prototype._addEndpoint = function ($endpoint) {
+    var adapter = new AdapterProxy();
+    adapter.worker   = this._worker;
+    adapter.endpoint = $endpoint;
+    adapter.initialize();
+&nbsp;
+    this._adapters.push(adapter);
+    //新增节点添加到hashring中
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(this._hashRing){
+<span class="cstat-no" title="statement not covered" >        var hasKey = $endpoint.sHost + ":" + $endpoint.iPort, hash = {};</span>
+<span class="cstat-no" title="statement not covered" >        hash[hasKey] = {vnode: this._iVnodeNumber};</span>
+<span class="cstat-no" title="statement not covered" >        this._hashRing.add(hash);</span>
+    }
+    return adapter;
+};
+&nbsp;
+EndpointManager.prototype._doEndpointsException = function (data) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if(data &amp;&amp; data.response &amp;&amp; data.response.error){
+        console.error("[TARS][EndpointManager doEndpoints, exception ,return:",data.response.error.code," ,objname:", this._worker.name," ,setname:",this._setname);
+    }
+    this._bRequest     = false;
+    this._iRefreshTime = TimeProvider.nowTimestamp() + 2000; //频率控制获取主控失败 2秒钟再更新
+};
+&nbsp;
+//根据传入的协议、地址以及端口号查找是否已在列表中
+EndpointManager.prototype._findEndpointByInfo = function ($endpoint) {
+    for (var i = 0; i &lt; this._adapters.length; i++) {
+        var adapter = this._adapters[i];
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (adapter._endpoint.sProtocol === $endpoint.sProtocol &amp;&amp; adapter._endpoint.sHost === $endpoint.sHost &amp;&amp; adapter._endpoint.iPort === $endpoint.iPort) {
+<span class="cstat-no" title="statement not covered" >            return adapter;</span>
+        }
+    }
+&nbsp;
+    return undefined;
+};
+&nbsp;
+EndpointManager.prototype._findEndpointByIpPort = function (ipPort) {
+    for (var i = 0; i &lt; this._adapters.length; i++) {
+        var adapter = this._adapters[i];
+        <span class="missing-if-branch" title="else path not taken" >E</span>if ( adapter._endpoint.sHost === ipPort.sHost &amp;&amp; adapter._endpoint.iPort === ipPort.iPort) {
+            return adapter;
+        }
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return undefined;</span>
+};
+&nbsp;
+//请求主控的处理函数
+EndpointManager.prototype._doEndpoints = function (result) { //如果请求主控服务成功
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (result.response.return != 0) {
+<span class="cstat-no" title="statement not covered" >        console.error("[TARS][EndpointManager doEndpoints exception ,return:",result.response.return," ,objname:", this._worker.name," ,setname:",this._setname);</span>
+<span class="cstat-no" title="statement not covered" >        return this._doEndpointsException();</span>
+    }
+    var nowTime = TimeProvider.nowTimestamp();
+    this._bRequest = false;
+&nbsp;
+    //有回成功的结点，按照正常的频率更新
+    //如果返回空列表，则不更新本地的节点列表 10s刷新一次
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(result.response.arguments.activeEp.value.length == 0 ){
+<span class="cstat-no" title="statement not covered" >        this._iRefreshTime = nowTime + this._iActiveEmptyInterval;</span>
+<span class="cstat-no" title="statement not covered" >        console.error("[TARS][EndpointManager doEndpoints, callback activeEps is empty,objname:", this._worker.name," ,setname:",this._setname);</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+    } else {
+        this._iRefreshTime = nowTime + this._iRefreshInterval;
+    }
+&nbsp;
+    //01 将新的节点接入到活动列表中
+    var actives   = [], i = 0, bHasNew = false;
+    var endpoints = result.response.arguments.activeEp;
+    for (i = 0, len = endpoints.value.length; i &lt; len; i++) {
+        var newEndpoint = new Endpoint();
+        newEndpoint.sProtocol = endpoints.value[i].istcp?"tcp":<span class="branch-1 cbranch-no" title="branch not covered" >"udp";</span>
+        newEndpoint.sHost     = endpoints.value[i].host;
+        newEndpoint.iPort     = endpoints.value[i].port;
+        newEndpoint.iTimeout  = endpoints.value[i].timeout || <span class="branch-1 cbranch-no" title="branch not covered" >0;</span>
+        newEndpoint.setId     = endpoints.value[i].setId || '';
+        newEndpoint.containerName = endpoints.value[i].containerName || '';
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (this._findEndpointByInfo(newEndpoint) === undefined) { //如果不在已有列表中，则新加入
+            bHasNew = true;
+            this._addEndpoint(newEndpoint, true);
+        }
+        actives.push(newEndpoint);
+    }
+    //02 将已经去除的地址，从活动列表中删除
+    for (i = 0; i &lt; this._adapters.length; i++) {
+        var bFound   = false;
+        var endpoint = this._adapters[i]._endpoint;
+&nbsp;
+        //查找该地址是否在活动列表中
+        for (var ii = 0, len = actives.length; ii &lt; len; ii++) {
+            if (endpoint.sProtocol === actives[ii].sProtocol &amp;&amp; endpoint.sHost === actives[ii].sHost &amp;&amp; endpoint.iPort === actives[ii].iPort) {
+                bFound = true;
+                break;
+            }
+        }
+&nbsp;
+        //如果在活动列表中没有找到，则说明该地址被停止了或者去除了，则从当前的队列中删除
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!bFound) {
+<span class="cstat-no" title="statement not covered" >            this._adapters[i].destroy();</span>
+<span class="cstat-no" title="statement not covered" >            this._adapters.splice(i, 1);</span>
+            //从hashring中删除
+<span class="cstat-no" title="statement not covered" >            if(this._hashRing){</span>
+<span class="cstat-no" title="statement not covered" >                this._hashRing.remove(endpoint.sHost + ":" + endpoint.iPort);</span>
+            }
+<span class="cstat-no" title="statement not covered" >            i--;</span>
+        }
+    }
+    //每次adapter列表添加新成员之后sort一次，保证所有节点的adapter顺序一致，避免出现使用hashcode时节点仍然没有分发到同一节点的情况
+    <span class="missing-if-branch" title="else path not taken" >E</span>if(bHasNew){
+        this._adapters.sort(function(adapter1, adapter2){
+            return adapter1.endpoint.sHost &gt; adapter2.endpoint.sHost;
+        });
+    }
+    //03 通知对应的ObjectProxy可以发送缓存中的请求了
+    this._worker.doInvoke();
+}
+&nbsp;
+//非直连的情况下，到主控查询活动列表
+EndpointManager.prototype._dns = function () {
+    var nowTime = TimeProvider.nowTimestamp();
+&nbsp;
+    //01 先判断是否可以查主控
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this._direct) { //如果是直连，不查主控
+<span class="cstat-no" title="statement not covered" >        return ;</span>
+    }
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this._bRequest &amp;&amp; this._iRequestTimeout &lt; nowTime) { //如果正在请求中，但已经超时，则重置
+<span class="cstat-no" title="statement not covered" >        console.error("[TARS][EndpointManager doEndpoints, requesting but timeout ,objname:", this._worker.name," ,setname:",this._setname);</span>
+<span class="cstat-no" title="statement not covered" >        this._doEndpointsException();</span>
+    }
+    if (this._bRequest || this._iRefreshTime &gt; nowTime) { //如果正在请求，或者还没到重试时间
+        return;
+    }
+&nbsp;
+    //02 根据是否开起SET化查询不同的活动IPList
+    this._bRequest = true;
+    this._iRequestTimeout = nowTime + this._iWaitTime;
+    var locator = this._comm.getProperty("locator");
+    <span class="missing-if-branch" title="else path not taken" >E</span>if(!this._loacator) {
+        // 第一次加载主控
+        this._loacator = locator;
+        this._registry.setLocator(locator);
+    } else {
+        // 非首次加载主控
+<span class="cstat-no" title="statement not covered" >        if(this._loacator != locator) {</span>
+            // 主控发生改变
+<span class="cstat-no" title="statement not covered" >            console.log('[locator] [old]' + this._loacator + ' [new] ' + locator);</span>
+<span class="cstat-no" title="statement not covered" >            this._loacator = locator;</span>
+<span class="cstat-no" title="statement not covered" >            this._registry.resetLocator(locator);</span>
+        }
+    }
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this._comm.ClientConfig.SetOpen || this._setname) {
+<span class="cstat-no" title="statement not covered" >        this._registry.findObjectByIdInSameSet(this._objname, this._setname || this._comm.ClientConfig.SetDivision).then(this._doEndpoints.bind(this), this._doEndpointsException.bind(this));</span>
+    } else {
+        this._registry.findObjectByIdInSameGroup(this._objname).then(this._doEndpoints.bind(this), this._doEndpointsException.bind(this));
+    }
+};
+&nbsp;
+//按照一定的规则选取一个可用的服务连接
+EndpointManager.prototype.selectAdapterProxy = function (reqMessage) {
+&nbsp;
+    //01 如果是非直连，则进入请求主控处理逻辑
+    !this._direct &amp;&amp; this._dns();
+&nbsp;
+    //若当前节点列表为空，直接返回
+    if(!this._adapters || this._adapters.length == 0) return;
+&nbsp;
+    //02 hashcode 调用
+    var adapter, adapters = [];
+    var hashCode = +reqMessage.request.property['hashCode'];
+    var consistentHash = reqMessage.request.property['consistentHash'];
+    var useHashCode = consistentHash || (hashCode &amp;&amp; !isNaN(hashCode));
+    adapters = this._adapters.slice(0);
+&nbsp;
+    if(useHashCode){
+        if(consistentHash){
+            //一致性哈希
+            if(!this._hashRing) this._initHashRing();
+            //这里其实应该unique的
+            var range = this._hashRing.range(consistentHash, adapters.length), firstHashAdapter;
+            do{
+                var ipPort = range[0].split(":");
+                adapter = this._findEndpointByIpPort({sHost: ipPort[0], iPort: parseInt(ipPort[1])});
+                <span class="missing-if-branch" title="if path not taken" >I</span>if(!adapter){
+<span class="cstat-no" title="statement not covered" >                    range.splice(0, 1);</span>
+<span class="cstat-no" title="statement not covered" >                    continue;</span>
+                }
+                <span class="missing-if-branch" title="else path not taken" >E</span>if(adapter.checkActive()) {
+                    return adapter;
+                }
+<span class="cstat-no" title="statement not covered" >                range.splice(0, 1);</span>
+<span class="cstat-no" title="statement not covered" >                if(!firstHashAdapter) <span class="cstat-no" title="statement not covered" >firstHashAdapter = adapter;</span></span>
+            } while (range.length &gt; 0);
+<span class="cstat-no" title="statement not covered" >            adapter = firstHashAdapter;</span>
+        } else {
+            // 取模哈希
+            var hash;
+            do {
+                hash = hashCode % adapters.length;
+                adapter = adapters[hash];
+                <span class="missing-if-branch" title="else path not taken" >E</span>if(adapter.checkActive()) {
+                    return adapter;
+                }
+<span class="cstat-no" title="statement not covered" >                adapters.splice(hash, 1);</span>
+            } while (adapters.length &gt; 0);
+<span class="cstat-no" title="statement not covered" >            adapters = this._adapters.slice(0);</span>
+<span class="cstat-no" title="statement not covered" >            hash = hashCode % adapters.length;</span>
+<span class="cstat-no" title="statement not covered" >            adapter = adapters[hash];</span>
+        }
+        //强制连接
+<span class="cstat-no" title="statement not covered" >        adapter.checkActive(true);</span>
+<span class="cstat-no" title="statement not covered" >        reqMessage.adapter=adapter;</span>
+<span class="cstat-no" title="statement not covered" >        reqMessage.RemoteEndpoint=adapter._endpoint;</span>
+<span class="cstat-no" title="statement not covered" >        adapter.pushTimeoutQueueN(reqMessage);</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+    }
+&nbsp;
+    // 03 检查是否有可用的连接
+    for (var i = 0; i &lt; this._adapters.length; i++) {
+        adapter = this._adapters[(this._hash++)%this._adapters.length];
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (adapter.checkActive()) {
+            return adapter;
+        }
+    }
+&nbsp;
+    // 如果当前没有可用的连接，则随机选取一个
+<span class="cstat-no" title="statement not covered" >    adapter = this._adapters[(this._hash++)%this._adapters.length];</span>
+<span class="cstat-no" title="statement not covered" >    adapter.checkActive(true); </span>//强制连接
+&nbsp;
+    // 04 返回可用的连接代理类
+<span class="cstat-no" title="statement not covered" >    return;</span>
+};
+&nbsp;
+EndpointManager.prototype.doFinishInvoke = <span class="fstat-no" title="function not covered" >function(endpoint, iResultCode){</span>
+<span class="cstat-no" title="statement not covered" >    var adapter = this._findEndpointByInfo(endpoint);</span>
+<span class="cstat-no" title="statement not covered" >    if(adapter){</span>
+<span class="cstat-no" title="statement not covered" >        adapter._doFinishInvoke(iResultCode);</span>
+    }
+}
+&nbsp;
+//销毁
+EndpointManager.prototype.destroy = function () {
+    for (var i = 0; i &lt; this._adapters.length; i++) {
+        this._adapters[i].destroy();
+    }
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 30 2020 12:15:32 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

@@ -1,9 +1,12 @@
 {
   "main": "protal.js",
   "name": "@tars/rpc",
-  "version": "2.0.13",
+  "version": "2.0.14",
   "types": "tars-rpc.d.ts",
   "description": "tars4nodejs的rpc通信框架",
+  "scripts": {
+    "test": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec --recursive"
+  },
   "author": {
     "name": "czzou",
     "email": "czzou@tencent.com"
@@ -29,6 +32,11 @@
     "@tars/utils": "^2.0.0",
     "@tars/stream": "^2.0.1",
     "hashring": "^3.2.0"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.5",
+    "mocha": "^6.0.2",
+    "should": "^13.2.3"
   },
   "readmeFilename": "README.md",
   "license": "BSD-3-Clause"

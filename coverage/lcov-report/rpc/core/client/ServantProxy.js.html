@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for rpc/core/client/ServantProxy.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">rpc/core/client/</a> ServantProxy.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>32/40</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">33.33% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>4/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">71.43% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>5/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">79.49% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>31/39</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * tars框架的客户端实现类
+ */
+var Promise      = require("@tars/utils").Promise;
+var ReqMessage   = require("./ReqMessage.js").ReqMessage;
+&nbsp;
+var ServantProxy = function () {
+    this._name   = undefined;
+    this._worker = undefined;
+    this._rpc    = undefined;
+};
+module.exports.ServantProxy = ServantProxy;
+&nbsp;
+ServantProxy.prototype.__defineGetter__("rpc", function () { return this._rpc; });
+&nbsp;
+ServantProxy.prototype.setTimeout  = <span class="fstat-no" title="function not covered" >function (iTimeout) {</span> //设置请求超时时间
+<span class="cstat-no" title="statement not covered" >    this._worker.timeout = iTimeout;</span>
+};
+&nbsp;
+ServantProxy.prototype.setProtocol = function ($protocol) { //设置协议解析器
+    this._worker.setProtocol($protocol);
+};
+&nbsp;
+ServantProxy.prototype.rpc_call = function ($RequestId, $FuncName, $AppBuffer) {
+    var argsLen = arguments.length, args;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (argsLen &gt; 2) {
+        args = new Array(argsLen - 2);
+        for (var i = 2; i &lt; argsLen; i += 1) {
+            args[i - 2] = arguments[i];
+        }
+    } else {
+<span class="cstat-no" title="statement not covered" >        args = [];</span>
+    }
+&nbsp;
+    var reqMessage = new ReqMessage();
+    reqMessage.request.iRequestId = $RequestId;
+    reqMessage.request.sFuncName  = $FuncName;
+    reqMessage.request.appBuffer  = args;
+    reqMessage.request.property   = {};
+    reqMessage.promise            = Promise.defer();
+    reqMessage.worker             = this._worker;
+    reqMessage.setTimeout(this._worker._iTimeout);
+&nbsp;
+    return this._worker.invoke(reqMessage).then(function (data) {
+        var response = {
+            costtime: 0
+        };
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(data.request &amp;&amp; data.request.costtime)
+            response.costtime = data.request.costtime;
+        response.appBuffer = data.response;
+&nbsp;
+        return {request:data.request, response:response};
+    }, <span class="fstat-no" title="function not covered" >function (data) {</span>
+<span class="cstat-no" title="statement not covered" >        data = data || {};</span>
+<span class="cstat-no" title="statement not covered" >        var response = {</span>
+            costtime: 0
+        };
+<span class="cstat-no" title="statement not covered" >        if(data.request &amp;&amp; data.request.costtime)</span>
+<span class="cstat-no" title="statement not covered" >            response.costtime = data.request.costtime;</span>
+<span class="cstat-no" title="statement not covered" >        response.error    = data.error;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        throw  {request:data.request, response:response};</span>
+    });
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 30 2020 12:15:32 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

@@ -31,7 +31,7 @@ stream.prototype.compose = function ($protoMessage) { //$protoMessage的结构�
 stream.prototype.composeTARS = function ($protoMessage) {
     //01 根据上层协议知道，客户端采用tars格式进行编解码，此时按照tars格式处理数据
     var response = new TarsPacket.ResponsePacket();
-    response.iVersion     = $protoMessage.origin.iVersion;
+    response.iVersion     = $protoMessage.origin.iVersion || 1;
     response.cPacketType  = 0;
     response.iMessageType = $protoMessage.origin.iMessageType;
     response.iRequestId   = $protoMessage.origin.iRequestId;

@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for rpc/core/client/ObjectProxy.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">rpc/core/client/</a> ObjectProxy.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">78.62% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>114/145</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">52.73% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>29/55</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">62.96% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>17/27</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">82.44% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>108/131</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * tars框架的客户端实现类
+ */
+var assert         = require("assert");
+var Promise         = require("@tars/utils").Promise;
+var Protocol        = require("../rpc-tars").client;
+var TarsError        = require("../util/TarsError.js").TarsError;
+var RpcCallError   = require("../util/RpcCallError.js").RpcCallError;
+var TQueue          = require("../util/TQueue.js").TQueue;
+var EndpointManager = require("./EndpointManager.js").EndpointManager;
+var ReqMessage      = require("./ReqMessage.js").ReqMessage;
+&nbsp;
+var CheckTimeoutInfo = function ()
+{
+    this.minTimeoutInvoke       = 2;        //计算的最小的超时次数, 默认2次(在checkTimeoutInterval时间内超过了minTimeoutInvoke, 才计算超时)
+    this.checkTimeoutInterval   = 60000;    //统计时间间隔, (默认60s, 不能小于30s)
+    this.frequenceFailInvoke    = 5;        //连续失败次数
+    this.minFrequenceFailTime   = 5;        //
+    this.radio                  = 0.5;      //超时比例 &gt; 该值则认为超时了 (0.1 &lt;= radio &lt;= 1.0)
+    this.tryTimeInterval        = 30000;    //重试时间间隔，单位毫秒
+    this.reconnectInterval      = 60000;    //非活跃节点调用失败时的重连时间间隔
+};
+&nbsp;
+///////////////////////////////////////////////定义调用类///////////////////////////////////////////////////////////////
+var ObjectProxy = function () {
+    this._objname          = "";            //ObjectProxy的名称
+    this._setname          = "";            //使用stringtoProxy时指定的set名称
+    this._pTimeoutQueue    = new TQueue();  //全局数据发送队列
+    this._manager          = undefined;     //对端连接管理器
+    this._version          = 1;             //协议号  tars:1 tup-complex:2  tup-simple:3
+    this._requestId        = 1;             //当前服务队列的请求ID号
+    this._iTimeout         = 3000;          //默认的调用超时时间
+    this._protocol         = Protocol;      //当前端口上的协议解析器
+    this._comm             = undefined;     //通信器实例
+    this._bSyncInvokeFinish = false;        //在进程间同步调用完成的消息，在流量较小的时候加快触发屏蔽逻辑
+    this._bRetryOnDestroy   = false;        //节点销毁时是否将发送失败的调用返还队列
+    this._checkTimeoutInfo  = new CheckTimeoutInfo();
+    this._iTransPoolSize     = 1;            //adapter中远端连接池大小
+};
+module.exports.ObjectProxy = ObjectProxy;
+&nbsp;
+//定义ObjectProxy的属性函数
+ObjectProxy.prototype.__defineSetter__("communicator", function (value){ this._comm = value; });
+ObjectProxy.prototype.__defineGetter__("communicator", <span class="fstat-no" title="function not covered" >function (){</span> <span class="cstat-no" title="statement not covered" >return this._comm; </span>});
+&nbsp;
+ObjectProxy.prototype.__defineGetter__("version", function () { return this._version; });
+ObjectProxy.prototype.__defineSetter__("version", function (value) { this._version = value; });
+&nbsp;
+ObjectProxy.prototype.__defineGetter__("timeout", function () { return this._iTimeout; });
+ObjectProxy.prototype.__defineSetter__("timeout", <span class="fstat-no" title="function not covered" >function (value) {</span> <span class="cstat-no" title="statement not covered" >this._iTimeout = value; </span>});
+&nbsp;
+ObjectProxy.prototype.__defineGetter__("name", function () { return this._objname; });
+ObjectProxy.prototype.__defineSetter__("name", <span class="fstat-no" title="function not covered" >function (value) {</span> <span class="cstat-no" title="statement not covered" >this._objname = value; </span>});
+&nbsp;
+ObjectProxy.prototype.__defineGetter__("pTimeoutQueue", function () { return this._pTimeoutQueue; });
+ObjectProxy.prototype.__defineSetter__("pTimeoutQueue", <span class="fstat-no" title="function not covered" >function (value) {</span> <span class="cstat-no" title="statement not covered" >this._pTimeoutQueue = value; </span>});
+&nbsp;
+//初始化ObjectProxy
+ObjectProxy.prototype.initialize = function ($ObjName, $SetName, options) {
+    options = options || <span class="branch-1 cbranch-no" title="branch not covered" >{};</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(options.hasOwnProperty("bRetryOnDestroy")) <span class="cstat-no" title="statement not covered" >this._bRetryOnDestroy = options.bRetryOnDestroy;</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(options.hasOwnProperty("iTransPoolSize")) <span class="cstat-no" title="statement not covered" >this._iTransPoolSize = options.iTransPoolSize;</span>
+    assert(typeof this._iTransPoolSize === "number" &amp;&amp; this._iTransPoolSize &gt; 0, "trans pool size must be &gt; 1 number");
+&nbsp;
+    this._manager = new EndpointManager(this, this._comm, $ObjName, $SetName, options);
+    this._objname = this._manager._objname;
+    this._setname = $SetName;
+};
+&nbsp;
+ObjectProxy.prototype.setProtocol = function ($protocol) {
+    this._protocol = $protocol;
+};
+&nbsp;
+ObjectProxy.prototype.genRequestId = function () {
+    return ++this._requestId;
+};
+&nbsp;
+ObjectProxy.prototype.setCheckTimeoutInfo = <span class="fstat-no" title="function not covered" >function (checkTimeoutInfo) {</span>
+<span class="cstat-no" title="statement not covered" >    Object.assign(this._checkTimeoutInfo, checkTimeoutInfo);</span>
+}
+&nbsp;
+ObjectProxy.prototype.setTransPoolSize = <span class="fstat-no" title="function not covered" >function (size) {</span>
+<span class="cstat-no" title="statement not covered" >    assert(typeof size === "number" &amp;&amp; size &gt; 0, "trans pool size must be &gt; 1 number");</span>
+<span class="cstat-no" title="statement not covered" >    this._iTransPoolSize = size;</span>
+}
+&nbsp;
+//当重新连接或者第一次连接上服务端时，传输类回调当前函数
+ObjectProxy.prototype.doInvoke = function () {
+    var self = this;
+&nbsp;
+    self._pTimeoutQueue.forEach(function (key) {
+        var reqMessage = self._pTimeoutQueue.pop(key, true);
+&nbsp;
+        var adapter    = self._manager.selectAdapterProxy(reqMessage);
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(adapter) {
+            adapter.invoke(reqMessage);
+        } else {
+<span class="cstat-no" title="statement not covered" >            self.doInvokeException(reqMessage);</span>
+        }
+    });
+};
+&nbsp;
+//在没有选取对端接口成功的情况下，框架会将请求放到对应ObjectProxy的请求队列中
+//此时如果一直连接服务不成功，reqMessage中的定时器会调用当前超时处理函数
+ObjectProxy.prototype.doTimeout = <span class="fstat-no" title="function not covered" >function($reqMessage) {</span>
+<span class="cstat-no" title="statement not covered" >    this._pTimeoutQueue.erase($reqMessage.request.iRequestId);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    $reqMessage.clearTimeout();</span>
+<span class="cstat-no" title="statement not covered" >    $reqMessage.promise.reject(new RpcCallError({request:$reqMessage, response:undefined, error:{code:TarsError.CLIENT.REQUEST_TIMEOUT, message:"call remote server timeout(no adapter selected)"}}));</span>
+};
+&nbsp;
+ObjectProxy.prototype.doInvokeException = <span class="fstat-no" title="function not covered" >function ($reqMessage) {</span>
+<span class="cstat-no" title="statement not covered" >    $reqMessage.clearTimeout();</span>
+<span class="cstat-no" title="statement not covered" >    $reqMessage.promise.reject(new RpcCallError({request:$reqMessage, response:undefined, error:{code:TarsError.SERVER.TARSADAPTERNULL, message:"select AdapterProxy is null"}}));</span>
+};
+&nbsp;
+ObjectProxy.prototype.invoke = function($reqMessage) {
+    var adapter  = this._manager.selectAdapterProxy($reqMessage);
+    if (adapter) {
+        adapter.invoke($reqMessage);
+    } else {
+        var hashCode = $reqMessage.request.property['hashCode'];
+&nbsp;
+        var adapters = this._manager.getAllAdapters() || <span class="branch-1 cbranch-no" title="branch not covered" >[];</span>
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(!hashCode || <span class="branch-1 cbranch-no" title="branch not covered" >adapters.length == 0)</span> {
+            // 第一次调用的时候，adapters长度为0
+            this._pTimeoutQueue.push($reqMessage.request.iRequestId, $reqMessage);
+        }
+    }
+&nbsp;
+    return $reqMessage.promise.promise;
+};
+&nbsp;
+ObjectProxy.prototype.tars_invoke = function ($FuncName, $BinBuffer, $Property) {
+    //判断最后一个参数，是否是属性结构体
+    var extProperty = {};
+    if (typeof $Property === 'object' &amp;&amp; $Property !== null) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if ($Property.hasOwnProperty("dyeing")) {
+<span class="cstat-no" title="statement not covered" >            extProperty.dyeing  = $Property.dyeing;</span>
+        }
+        if ($Property.hasOwnProperty("context")) {
+            extProperty.context = $Property.context;
+        }
+        if ($Property.hasOwnProperty("packetType")) {
+            extProperty.packetType = $Property.packetType;
+        }
+        if ($Property.hasOwnProperty("hashCode")) {
+            extProperty.hashCode = $Property.hashCode;
+        }
+        if ($Property.hasOwnProperty("consistentHash")) {
+            extProperty.consistentHash = $Property.consistentHash;
+        }
+        if($Property.hasOwnProperty("iVersion")){
+            extProperty.iVersion = $Property.iVersion;
+        }
+    }
+&nbsp;
+    //构造请求
+    var reqMessage = new ReqMessage();
+    reqMessage.request.iRequestId   = this.genRequestId();
+    reqMessage.request.sServantName = this._objname;
+    reqMessage.request.sFuncName    = $FuncName;
+    reqMessage.request.appBuffer    = $BinBuffer;
+    reqMessage.request.property     = extProperty;
+    reqMessage.request.configure    = this._comm.configure;
+    reqMessage.request.iTimeout     = this._iTimeout;
+    reqMessage.promise              = Promise.defer();
+    reqMessage.worker               = this;
+    reqMessage.setTimeout(this._iTimeout);
+    return this.invoke(reqMessage);
+};
+ObjectProxy.prototype.tup_invoke = function ($FuncName, $UniAttribute, $Property) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if ($Property === null || typeof $Property !== 'object') {
+        $Property = {};
+    }
+    $Property.iVersion = this.version;
+    $UniAttribute._iver = this.version;
+    return this.tars_invoke($FuncName, $UniAttribute.encode(), $Property);
+}
+ObjectProxy.prototype.setSyncInvokeFinish = <span class="fstat-no" title="function not covered" >function(bSync){</span>
+<span class="cstat-no" title="statement not covered" >    var self = this;</span>
+    //不在node-agent中运行，单进程运行，无需设置同步
+<span class="cstat-no" title="statement not covered" >    if(!process.send) {</span>
+<span class="cstat-no" title="statement not covered" >        self._bSyncInvokeFinish = false;</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+    }
+<span class="cstat-no" title="statement not covered" >    if(!self.OnFinishInvoke){</span>
+<span class="cstat-no" title="statement not covered" >        self.OnFinishInvoke = <span class="fstat-no" title="function not covered" >function(msg){</span></span>
+<span class="cstat-no" title="statement not covered" >            if(!msg || !msg.event || msg.event!=="finishInvoke") <span class="cstat-no" title="statement not covered" >return;</span></span>
+<span class="cstat-no" title="statement not covered" >            if(msg.objname !== self._objname || msg.setname !== self._setname) <span class="cstat-no" title="statement not covered" >return;</span></span>
+<span class="cstat-no" title="statement not covered" >            self._manager.doFinishInvoke(msg.endpoint, msg.iResultCode);</span>
+        }
+    }
+<span class="cstat-no" title="statement not covered" >    if(bSync) {</span>
+<span class="cstat-no" title="statement not covered" >        process.on("message",this.OnFinishInvoke)</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >        process.removeListener("message",this.OnFinishInvoke);</span>
+    }
+<span class="cstat-no" title="statement not covered" >    this._bSyncInvokeFinish = bSync;</span>
+}
+&nbsp;
+ObjectProxy.prototype.destroy = function () {
+    this._manager.destroy();
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 30 2020 12:15:32 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

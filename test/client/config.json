@@ -1,0 +1,14 @@
+{
+    "locator":{
+        "servant":"Test.test.locatorObj",
+        "endpoint": "tcp -h 127.0.0.1 -p 14001 -t 10000"
+    },
+    "customserver":{
+        "endpoint":"tcp -h 127.0.0.1 -p 14002 -t 10000"
+    },
+    "mockServer":{
+        "servant":"TRom.NodeTarsServer.NodeTarsObj",
+        "activeEndpoints": ["tcp -h 127.0.0.1 -p 14003 -t 10000", "tcp -h 127.0.0.1 -p 14004 -t 10000"],
+        "inactiveEndpoints": ["tcp -h 127.0.0.1 -p 14005 -t 10000"]
+    }
+}

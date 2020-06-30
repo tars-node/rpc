@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for rpc/core/server/BindAdapter.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">rpc/core/server/</a> BindAdapter.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">88.57% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>62/70</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">52.94% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>9/17</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">73.68% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>14/19</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">94.64% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>53/56</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">49×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var assert         = require("assert");
+var Endpoint       = require("@tars/utils").Endpoint;
+var TimeProvider   = require("@tars/utils").timeProvider;
+var TarsError       = require("../util/TarsError.js").TarsError;
+var NetThread      = require("./NetThread.js").NetThread;
+var TarsCurrent     = require("./TarsCurrent.js").TarsCurrent;
+&nbsp;
+////////////////////
+// /////////////////////////监听端口功能包裹类///////////////////////////////////////////////////////
+var BindAdapter = function () {
+    this._objname       = "";           //BindAdapter的名字
+    this._servant       = "";           //当前端口上的servant名字
+    this._endpoint      = undefined;    //当前端口监听地址
+&nbsp;
+    this._protocolName  = "";
+    this._protocol      = undefined;    //当前端口上的请求包协议解析器
+    this._maxconns      = 1024;         //当前端口上最大的连接数
+&nbsp;
+    this._netthread     = undefined;    //当前端口上的监听服务
+    this._handleImp     = undefined;    //当前端口上的逻辑处理对象实例
+};
+module.exports.BindAdapter = BindAdapter;
+&nbsp;
+//创建对外属性设置接口
+BindAdapter.prototype.__defineGetter__("name", <span class="fstat-no" title="function not covered" >function () {</span> <span class="cstat-no" title="statement not covered" >return this._objname; </span>});
+BindAdapter.prototype.__defineSetter__("name", function (value) { this._objname = value; });
+&nbsp;
+BindAdapter.prototype.__defineGetter__("servantName", function () { return this._servant; });
+BindAdapter.prototype.__defineSetter__("servantName", function (value) { this._servant = value; });
+&nbsp;
+BindAdapter.prototype.__defineGetter__("maxconns", <span class="fstat-no" title="function not covered" >function () {</span> <span class="cstat-no" title="statement not covered" >return this._maxconns; </span>});
+BindAdapter.prototype.__defineSetter__("maxconns", function (value) { this._maxconns = value; });
+&nbsp;
+BindAdapter.prototype.__defineGetter__("endpoint", <span class="fstat-no" title="function not covered" >function () {</span> <span class="cstat-no" title="statement not covered" >return this._endpoint; </span>});
+BindAdapter.prototype.__defineSetter__("endpoint", function (value) { this._endpoint = value; });
+&nbsp;
+BindAdapter.prototype.__defineGetter__("protocolName", <span class="fstat-no" title="function not covered" >function () {</span> <span class="cstat-no" title="statement not covered" >return this._protocolName; </span>});
+BindAdapter.prototype.__defineSetter__("protocolName", function (value) { this._protocolName = value; });
+&nbsp;
+BindAdapter.prototype.__defineGetter__("protocol", <span class="fstat-no" title="function not covered" >function () {</span> <span class="cstat-no" title="statement not covered" >return this._protocol; </span>});
+BindAdapter.prototype.__defineSetter__("protocol", function (value) { this._protocol = value; });
+&nbsp;
+BindAdapter.prototype.__defineGetter__("handleImp", function () { return this._handleImp; });
+BindAdapter.prototype.__defineSetter__("handleImp", function (value) { this._handleImp = value; });
+&nbsp;
+BindAdapter.prototype.isTarsProtocol = function () { //判断是否是tars协议
+    return this._protocolName === "tars";
+};
+&nbsp;
+BindAdapter.prototype.start = function () {
+    assert(this._endpoint.sProtocol === "tcp" || <span class="branch-1 cbranch-no" title="branch not covered" >this._endpoint.sProtocol === "udp",</span> "trans protocol must be tcp or udp");
+&nbsp;
+    this._netthread = new NetThread(this, this._endpoint, this._protocol);
+    this._netthread.initialize();
+};
+&nbsp;
+BindAdapter.prototype.stop = function () {
+    this._netthread.stop();
+};
+&nbsp;
+//当传输端口上获得一个完整的请求包之后
+BindAdapter.prototype.dispatch = function ($Transceiver, $protoMessage) {
+    var current = new TarsCurrent();
+    current._origin      = $protoMessage.origin;
+    current._endpoint    = new Endpoint($Transceiver.socket.remoteAddress, $Transceiver.socket.remotePort);
+    current._adapter     = this;
+    current._transceiver = $Transceiver;
+    current._timestamp   = TimeProvider.nowTimestamp();
+&nbsp;
+    try {
+        //处理非TARS协议
+        if (this.isTarsProtocol() === false) {
+            var Func = ($protoMessage.sFuncName &amp;&amp; this.handleImp[$protoMessage.sFuncName]) || <span class="branch-2 cbranch-no" title="branch not covered" >this.handleImp["doRequest"];</span>
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (Func) {
+                Func.call(this.handleImp, current, $protoMessage.origin);
+            } else {
+<span class="cstat-no" title="statement not covered" >                current.sendErrorResponse(TarsError.SERVER.FUNC_NOT_FOUND, "Not Found Func By Name:" + ($protoMessage.sFuncName?$protoMessage.sFuncName:"doRequest"));</span>
+            }
+        }
+&nbsp;
+        //处理tars协议
+        if (this.isTarsProtocol() === true) {
+            var iReturn = this._handleImp.onDispatch(current, $protoMessage.sFuncName, $protoMessage.origin.sBuffer);
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (iReturn != TarsError.SUCCESS) {
+<span class="cstat-no" title="statement not covered" >                current.sendErrorResponse(iReturn, "");</span>
+            }
+        }
+    } catch (e) {
+<span class="cstat-no" title="statement not covered" >        current.sendErrorResponse(e.code != undefined?e.code:TarsError.SERVER.DECODE_ERROR, "BindAdapter Exception:" + e.message);</span>
+    }
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jun 30 2020 12:15:32 GMT+0800 (GMT+08:00)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

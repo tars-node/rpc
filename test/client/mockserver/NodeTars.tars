@@ -1,0 +1,11 @@
+module TRom
+{
+    interface NodeTars
+    {
+        int test();
+
+        int testRpcCall(string sUsrName, out string sValue);
+
+        int testContext();
+    };
+};
