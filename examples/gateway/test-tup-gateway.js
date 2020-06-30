@@ -69,7 +69,7 @@ class RequestGateway{
 }
 
 async function test(){
-    const gateway = new RequestGateway("9.134.37.161", 3015, "/tup", "Hello.HelloServer2.HelloObj", "add")
+    const gateway = new RequestGateway("127.0.0.1", 3015, "/tup", "Hello.HelloServer2.HelloObj", "add")
     let rsp = await gateway.send({
         iNum1: 123,
         iNum2: 456,
