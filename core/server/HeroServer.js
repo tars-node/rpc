@@ -114,16 +114,22 @@ HeroServer.prototype._waitForShutdown = function () {
         //判断handleImp的initialize方法是否返回promise对象，支持server启动前的准备工作
         (function (){
             var adapter = this._adapters[i];
-            adapter.handleImp = new this._servants[adapter.servantName]();
-            adapter.handleImp.application = this;
-            var promise = adapter.handleImp.initialize();
-            if(promise && typeof promise.then == "function"){
-                initializePromiseArray.push(promise.then(function (data) {
+            if(adapter.protocolName == "tars"){
+                //tars协议的逻辑，启动 adapter 的监听
+                adapter.handleImp = new this._servants[adapter.servantName]();
+                adapter.handleImp.application = this;
+                var promise = adapter.handleImp.initialize();
+                if(promise && typeof promise.then == "function"){
+                    initializePromiseArray.push(promise.then(function (data) {
+                        adapter.start();
+                        return data;
+                    }));
+                } else {
                     adapter.start();
-                    return data;
-                }));
+                }
             } else {
-                adapter.start();
+                //非tars协议的逻辑，将 endpoint 信息传递出去，由用户自行启动监听
+                this._servants[adapter.servantName](adapter.endpoint);
             }
         }).call(this);
     }
@@ -155,8 +161,19 @@ SimpleServer.prototype.stop = function () {
 };
 
 ///////////////////////////////////////////////对外提供的静态方法/////////////////////////////////////////////////////////
-HeroServer.createServer = function ($HandleImp) {
-    return $HandleImp?(new SimpleServer($HandleImp)):(new HeroServer());
+HeroServer.createServer = function ($Handle, $sConfigFile) {
+    if(!$Handle) return new HeroServer();
+    if(typeof $Handle == "function") return new SimpleServer($Handle)
+    var svr = new HeroServer();
+    svr.initialize(process.env.TARS_CONFIG || $sConfigFile, (svr) => {
+        for (var i = 0, len = svr._adapters.length; i < len; i++) {
+            var adapter = svr._adapters[i];
+            if($Handle[adapter.servantName]){
+                svr.addServant($Handle[adapter.servantName], adapter.servantName);
+            }
+        }
+    });
+    return svr;
 };
 
 HeroServer.getServant = function ($sConfigFile, $ServantName) {

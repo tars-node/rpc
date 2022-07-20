@@ -412,6 +412,7 @@ export interface HeroServerStatic {
   BindAdapterOption (): BindAdapterOptions
 
   createServer (): HeroServer
+  createServer (HandleMap: Record<string, Handle|Function>, sConfigFile?: string): HeroServer
   createServer (HandleImp: Handle): SimpleServer
 
   getServant (sConfigFile?: string, servantName?: string): ServantConfig[]
