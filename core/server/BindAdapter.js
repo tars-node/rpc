@@ -1,3 +1,9 @@
+/*
+ * @Date: 2022-07-20 22:25:40
+ * @LastEditors: czzou
+ * @LastEditTime: 2022-07-21 10:35:26
+ * @FilePath: /rpc/core/server/BindAdapter.js
+ */
 var assert         = require("assert");
 var Endpoint       = require("@tars/utils").Endpoint;
 var TimeProvider   = require("@tars/utils").timeProvider;
@@ -45,6 +51,10 @@ BindAdapter.prototype.__defineSetter__("handleImp", function (value) { this._han
 
 BindAdapter.prototype.isTarsProtocol = function () { //判断是否是tars协议
     return this._protocolName === "tars";
+};
+
+BindAdapter.prototype.isTarsHandler = function (handleImp) { //判断是否是处理tars协议的 handler
+    return handleImp && handleImp.prototype && handleImp.prototype.initialize;
 };
 
 BindAdapter.prototype.start = function () {

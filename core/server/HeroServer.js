@@ -114,9 +114,10 @@ HeroServer.prototype._waitForShutdown = function () {
         //判断handleImp的initialize方法是否返回promise对象，支持server启动前的准备工作
         (function (){
             var adapter = this._adapters[i];
-            if(adapter.protocolName == "tars"){
+            var handleImp = this._servants[adapter.servantName];
+            if(adapter.isTarsProtocol() || adapter.isTarsHandler(handleImp)){
                 //tars协议的逻辑，启动 adapter 的监听
-                adapter.handleImp = new this._servants[adapter.servantName]();
+                adapter.handleImp = new handleImp();
                 adapter.handleImp.application = this;
                 var promise = adapter.handleImp.initialize();
                 if(promise && typeof promise.then == "function"){
@@ -129,7 +130,7 @@ HeroServer.prototype._waitForShutdown = function () {
                 }
             } else {
                 //非tars协议的逻辑，将 endpoint 信息传递出去，由用户自行启动监听
-                this._servants[adapter.servantName](adapter.endpoint);
+                handleImp(adapter.endpoint);
             }
         }).call(this);
     }
